@@ -1,0 +1,142 @@
+[INFO carlsim/kernel/src/snn_cpu.cpp:2023] *********************************************************************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2025] ********************      Welcome to CARLsim 3.1      ***************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2026] *********************************************************************************
+
+[INFO carlsim/kernel/src/snn_cpu.cpp:2028] ***************************** Configuring Network ********************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2030] Starting CARLsim simulation "VisualStimulus Example" in USER mode
+[INFO carlsim/kernel/src/snn_cpu.cpp:2031] Random number seed: 1491832777
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2037] Current local time and date: Mon Apr 10 15:59:37 2017
+
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:201] grp_Info[0, VSinput].numPostSynapses = 1, grp_Info[1, output].numPreSynapses = 1024
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:209] CONNECT SETUP: connId=0, mulFast=1.000000, mulSlow=1.000000
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:4432] Beginning reorganization of network....
+[INFO carlsim/kernel/src/snn_cpu.cpp:2468] 
+
+[INFO carlsim/kernel/src/snn_cpu.cpp:2469] ***************************** Setting up Network **********************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2471] numN = 1025, numPostSynapses = 1, numPreSynapses = 1024, maxDelay = 1
+[INFO carlsim/kernel/src/snn_cpu.cpp:2300] allocated nSpikeCnt
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2428] Allocation for 1(output), St=0, End=0
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2660] Allocation for 0(VSinput), St=1, End=1024
+[INFO carlsim/kernel/src/print_snn_info.cpp:288] Group VSinput(0): 
+[INFO carlsim/kernel/src/print_snn_info.cpp:291]   - Type                       =    EXCIT
+[INFO carlsim/kernel/src/print_snn_info.cpp:292]   - Size                       =     1024
+[INFO carlsim/kernel/src/print_snn_info.cpp:293]   - Start Id                   =        1
+[INFO carlsim/kernel/src/print_snn_info.cpp:294]   - End Id                     =     1024
+[INFO carlsim/kernel/src/print_snn_info.cpp:295]   - numPostSynapses            =        1
+[INFO carlsim/kernel/src/print_snn_info.cpp:296]   - numPreSynapses             =        0
+[INFO carlsim/kernel/src/print_snn_info.cpp:304]   - Refractory period          =  0.00000
+[INFO carlsim/kernel/src/print_snn_info.cpp:288] Group output(1): 
+[INFO carlsim/kernel/src/print_snn_info.cpp:291]   - Type                       =    EXCIT
+[INFO carlsim/kernel/src/print_snn_info.cpp:292]   - Size                       =        1
+[INFO carlsim/kernel/src/print_snn_info.cpp:293]   - Start Id                   =        0
+[INFO carlsim/kernel/src/print_snn_info.cpp:294]   - End Id                     =        0
+[INFO carlsim/kernel/src/print_snn_info.cpp:295]   - numPostSynapses            =        0
+[INFO carlsim/kernel/src/print_snn_info.cpp:296]   - numPreSynapses             =     1024
+[INFO carlsim/kernel/src/print_snn_info.cpp:270] Connection ID 0: VSinput(0) => output(1)
+[INFO carlsim/kernel/src/print_snn_info.cpp:271]   - Type                       =    FIXED
+[INFO carlsim/kernel/src/print_snn_info.cpp:272]   - Min weight                 =  0.00000
+[INFO carlsim/kernel/src/print_snn_info.cpp:273]   - Max weight                 =  0.50000
+[INFO carlsim/kernel/src/print_snn_info.cpp:274]   - Initial weight             =  0.50000
+[INFO carlsim/kernel/src/print_snn_info.cpp:275]   - Min delay                  =        1
+[INFO carlsim/kernel/src/print_snn_info.cpp:276]   - Max delay                  =        1
+[INFO carlsim/kernel/src/print_snn_info.cpp:277]   - Radius X                   =    -1.00
+[INFO carlsim/kernel/src/print_snn_info.cpp:278]   - Radius Y                   =    -1.00
+[INFO carlsim/kernel/src/print_snn_info.cpp:279]   - Radius Z                   =    -1.00
+[INFO carlsim/kernel/src/print_snn_info.cpp:283]   - Avg numPreSynapses         =     1024
+[INFO carlsim/kernel/src/print_snn_info.cpp:284]   - Avg numPostSynapses        =        1
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2740] ******************
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2741] CompactConnection: 
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2742] ******************
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2743] old_postCnt = 1024, new_postCnt = 1024
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2744] old_preCnt = 1024,  new_postCnt = 1024
+[DEBUG carlsim/kernel/src/print_snn_info.cpp:66] checkNetworkBuilt()
+[DEBUG carlsim/kernel/src/print_snn_info.cpp:67] Network not yet elaborated and built...
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:4853] Grp: 0:VSinput s=1 e=1024 
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:4855] Grp: 0:VSinput s=1 e=1024  
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:4853] Grp: 1:output s=0 e=0 
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:4855] Grp: 1:output s=0 e=0  
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:4892] 	0 (VSinput) start=0, type=F maxWts = 0.500000 (**)
+[INFO carlsim/kernel/src/snn_cpu.cpp:4467] 
+[INFO carlsim/kernel/src/snn_cpu.cpp:4469] *****************      Initializing CPU Simulation      *************************
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[INFO carlsim/kernel/src/snn_cpu.cpp:760] 
+[INFO carlsim/kernel/src/snn_cpu.cpp:765] ********************      Running CPU Simulation      ***************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:767] 
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:750] runNetwork: runDur=1000ms, printRunSummary=y, copyState=n
+[INFO carlsim/kernel/src/snn_cpu.cpp:3002] 
+
+[INFO carlsim/kernel/src/snn_cpu.cpp:3004] ********************      CPU Simulation Summary      ***************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:3007] Network Parameters: 	numNeurons = 1025 (numNExcReg:numNInhReg = 0.1:0.0)
+[INFO carlsim/kernel/src/snn_cpu.cpp:3008] 			numSynapses = 1024
+[INFO carlsim/kernel/src/snn_cpu.cpp:3009] 			maxDelay = 1
+[INFO carlsim/kernel/src/snn_cpu.cpp:3010] Simulation Mode:	CUBA
+[INFO carlsim/kernel/src/snn_cpu.cpp:3011] Random Seed:		1491832777
+[INFO carlsim/kernel/src/snn_cpu.cpp:3012] Timing:			Model Simulation Time = 61 sec
+[INFO carlsim/kernel/src/snn_cpu.cpp:3013] 			Actual Execution Time = 0.00 sec
+[INFO carlsim/kernel/src/snn_cpu.cpp:3014] Average Firing Rate:	2+ms delay = 0.000 Hz
+[INFO carlsim/kernel/src/snn_cpu.cpp:3015] 			1ms delay = inf Hz
+[INFO carlsim/kernel/src/snn_cpu.cpp:3016] 			Overall = 24.176 Hz
+[INFO carlsim/kernel/src/snn_cpu.cpp:3017] Overall Firing Count:	2+ms delay = 0
+[INFO carlsim/kernel/src/snn_cpu.cpp:3018] 			1ms delay = 1511584
+[INFO carlsim/kernel/src/snn_cpu.cpp:3019] 			Total = 1511584
+[INFO carlsim/kernel/src/snn_cpu.cpp:3020] *********************************************************************************
+

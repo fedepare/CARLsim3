@@ -1,0 +1,12 @@
+\form#0:$\sigma$
+\form#1:$ (pre.x-post.x)^2/a^2 + (pre.y-post.y)/b^2 <= 1 $
+\form#2:$pre.z==post.z$
+\form#3:$ (pre.x-post.x)^2/a^2 + (pre.y-post.y)/b^2 == 1$
+\form#4:$ pre.x = pre.x / gridPre.x * gridPost.x $
+\form#5:$ pre.y = pre.y / gridPre.y * gridPost.y $
+\form#6:$ pre.z = pre.z / gridPre.z * gridPost.z $
+\form#7:$i_{10}$
+\form#8:\begin{align*} i_{10} = & G_0^{down} (v_{10} - v_{0}) + G_5^{down} (v_{10} - v_{5}) + G_{15}^{up} (v_{10} - v_{15}), & \text{(1)} \end{align*}
+\form#9:$v_n$
+\form#10:$G_n^{down}$
+\form#11:$G_n^{up}$

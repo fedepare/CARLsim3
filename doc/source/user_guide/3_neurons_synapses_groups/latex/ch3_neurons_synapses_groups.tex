@@ -1,0 +1,229 @@
+\hypertarget{ch3_neurons_synapses_groups_ch3s1_neurons}{}\section{3.\+1 Neurons}\label{ch3_neurons_synapses_groups_ch3s1_neurons}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler 
+
+Stanislav Listopad
+\end{DoxyAuthor}
+C\+A\+R\+Lsim currently supports Izhikevich spiking neurons with either current-\/based or conductance-\/based synapses (see \hyperlink{ch3_neurons_synapses_groups_ch3s2_synapses}{3.\+2 Synapses}), but more neuron types are planned for the future. Different groups of neurons can be created from a one-\/dimensional array to a three-\/dimensional grid (see \hyperlink{ch3_neurons_synapses_groups_ch3s3s2_topography}{3.\+3.\+2 Topography}) via {\ttfamily create\+Spike\+Generator\+Group} and {\ttfamily create\+Group}.
+
+Differential equations can be integrated either with the forward Euler or Runge-\/\+Kutta method (see ch12s2\+\_\+num\+\_\+int).\hypertarget{ch3_neurons_synapses_groups_ch3s1s1_izhikevich_neurons4}{}\subsection{3.\+1.\+1 Izhikevich Neurons (4-\/\+Parameter Model)}\label{ch3_neurons_synapses_groups_ch3s1s1_izhikevich_neurons4}
+The Izhikevich neuron is a dynamical systems model that can be described by a two-\/dimensional system of ordinary differential equations\+:
+
+\begin{align*} \frac{dv}{dt} = & ~ 0.04v^2 + 5v + 140 - u + I & \text{(1)}\\ \frac{du}{dt} = & ~ a (bv - u) & \text{(2)} \end{align*}
+
+Here, (1) describes the membrane potential $v$ for a given current $I$, where $I$ is the sum of all synaptic and external currents; that is, $I = i_{syn} + I_{ext}$ (see \hyperlink{ch3_neurons_synapses_groups_ch3s2_synapses}{3.\+2 Synapses}). (2) describes a recovery variable $u$; the parameter $a$ is the rate constant of the recovery variable, and the parameter $b$ describes the sensitivity of the recovery variable to the subthreshold fluctuations of the membrane potential. All parameters in (1) and (2) are dimensionless; however, the right-\/hand side of (1) is in a form such that the membrane potential $v$ has mV scale and the time $t$ has ms scale. $a, b, c, d$ are open parameters that have different values for different neuron types.
+
+In contrast to other simple models such as the leaky integrate-\/and-\/fire (L\+IF) neuron, the Izhikevich neuron is able to generate the upstroke of the spike itself. Thus the voltage reset occurs not at the threshold, but at the peak ( $v_{cutoff}=+30$) of the spike. The action potential downstroke is modeled using an instantaneous reset of the membrane potential whenever $v$ reaches the spike cutoff, plus a stepping of the recovery variable\+:
+
+\begin{align*} v(v>30) = & ~ c & \text{(3)}\\ u(v>30) = & ~ u + d & \text{(4)}\end{align*}
+
+The inclusion of $u$ in the model allows for the simulation of typical spike patterns observed in biological neurons. The four parameters $a, b, c, d$ can be set to simulate different types of neurons. For example, regular spiking (RS) neurons (class 1 excitable) have $a=0.02, b=0.2, c=-65, d=8$. Fast spiking (FS) neurons (class 2 excitable) have $a=0.1, b=0.2, c=-65, d=2)$. For more information on different neuron types, see Izhikevich (2003, 2004).
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ch3_neurons_synapses_groups_ch3s1s2_izhikevich_neurons9}{3.\+1.\+2 Izhikevich Neurons (9-\/\+Parameter Model)}
+\end{DoxySeeAlso}
+\hypertarget{ch3_neurons_synapses_groups_ch3s1s2_izhikevich_neurons9}{}\subsection{3.\+1.\+2 Izhikevich Neurons (9-\/\+Parameter Model)}\label{ch3_neurons_synapses_groups_ch3s1s2_izhikevich_neurons9}
+The 9-\/parameter izhikevich neuron model is equivalent to the 4-\/parameter one. Larger number of parameters is used for convenience in describing various neuron types.
+
+\begin{align*} \frac{dv}{dt} = & ~ (k (v - vr) (v - vt) - u + I) / C & \text{(5)}\\ \end{align*}
+
+Here, (5) describes the membrane potential $v$ for a given current $I$, where $I$ is the sum of all synaptic and external currents; that is, $I = i_{syn} + I_{ext}$ (see \hyperlink{ch3_neurons_synapses_groups_ch3s2_synapses}{3.\+2 Synapses}).
+
+The parameter $k$ is a rate constant of the membrane potential, and can be found using the rheobase and the input resistance of a neuron. The parameter $vr$ is the resting membrane potential. The parameter $vt$ is the instantaneous threshold potential. The parameter $C$ is the membrane capacitance.
+
+\begin{align*} \frac{dv}{dt} = & ~ a (b (v - vr) - u) & \text{(6)}\\ \end{align*}
+
+Here, (15) describes a recovery variable $u$;
+
+The parameter $a$ is the rate constant of the recovery variable. The parameter $b$ describes the sensitivity of the recovery variable to the subthreshold fluctuations of the membrane potential. The parameter $vr$ is the resting membrane potential.
+
+All parameters in (5) and (6) are dimensionless; however, the right-\/hand side of (5) is in a form such that the membrane potential $v$ has mV scale and the time $t$ has ms scale. is voltage, $u$ is the recovery variable, $I$ is the input current, and $C, k, vr, vt, a, b, vpeak, c, d$ are open parameters that have different values for different neuron types.
+
+In contrast to other simple models such as the leaky integrate-\/and-\/fire (L\+IF) neuron, the Izhikevich neuron is able to generate the upstroke of the spike itself. Thus the voltage reset occurs not at the threshold, but at the peak ( $v_{cutoff}=+vpeak$) of the spike. The action potential downstroke is modeled using an instantaneous reset of the membrane potential whenever $v$ reaches the spike cutoff, plus a stepping of the recovery variable\+:
+
+\begin{align*} v(v>vpeak) = & ~ c & \text{(7)}\\ u(v>vpeak) = & ~ u + d & \text{(8)}\end{align*}
+
+Regular spiking (RS) neurons (class 1 excitable) have $C=100, k=0.7, vr=-60, vt=-40, a=0.03, b=-2.0, vpeak=35, c=-50, d=100$. Fast spiking (FS) neurons (class 2 excitable) have $C=20, k=1, vr=-55, vt=-40, a=0.15, b=8, vpeak=25, c=-55, d=200)$. For more information on different neuron types, see Izhikevich (2003, 2004). For more information about 9-\/parameter model see Izhikevich (2007).
+
+We do not recommend to use forward-\/\+Euler when working with the 9-\/parameter Izhikevich model. Use Runge-\/\+Kutta instead (see ch12s2s2\+\_\+\+R\+K4).
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ch3_neurons_synapses_groups_ch3s1s1_izhikevich_neurons4}{3.\+1.\+1 Izhikevich Neurons (4-\/\+Parameter Model)} 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+v3.\+1
+\end{DoxySince}
+\hypertarget{ch3_neurons_synapses_groups_ch3s1s3_compartments}{}\subsection{3.\+1.\+3 Multi-\/\+Compartment Neurons}\label{ch3_neurons_synapses_groups_ch3s1s3_compartments}
+\begin{DoxyAuthor}{Author}
+Stanislav Listopad 
+
+Michael Beyeler
+\end{DoxyAuthor}
+Neurons in a group can be extended to include multiple compartments by calling C\+A\+R\+Lsim\+::set\+Compartment\+Parameters on a group and connecting them via C\+A\+R\+Lsim\+::connect\+Compartments.
+
+In this case, the total current $I$ of (1) and (5) is extended to include a dendritic current, $i_{dendr}$ in pA; that is, $I = i_{syn} + i_{dendr} + I_{ext}$. The dendritic current at each compartment consists of the currents coming from the {\itshape down} (\char`\"{}mother\char`\"{}) compartment and {\itshape up} (\char`\"{}daughter\char`\"{}) compartments\+:
+
+\begin{align*} i_{dendr} = & G_{down} (v - v_{down}) + \sum \limits_{up} G_{up} (v - v_{up}) & \text{(9)} \end{align*}
+
+with the values of the conductances $G_{up}$ and $G_{down}$ specified in C\+A\+R\+Lsim\+::set\+Compartment\+Parameters.
+
+For more information on multi-\/compartmental neurons, see Izhikevich and Edelman (2008), especially their supporting information.
+
+We do not recommend to use forward-\/\+Euler when working with multi-\/compartment neurons. Use Runge-\/\+Kutta instead (see ch12s2s2\+\_\+\+R\+K4).
+
+\begin{DoxyNote}{Note}
+The maximum number of allowed compartmental connections per neuron is controlled by the parameter \+::\+M\+A\+X\+\_\+\+N\+U\+M\+\_\+\+C\+O\+M\+P\+\_\+\+C\+O\+NN in carlsim\+\_\+definitions.\+h. 
+\end{DoxyNote}
+\begin{DoxySince}{Since}
+v3.\+1
+\end{DoxySince}
+\hypertarget{ch3_neurons_synapses_groups_ch3s1s4_other_neurons}{}\subsection{3.\+1.\+4 Other Neuron Types}\label{ch3_neurons_synapses_groups_ch3s1s4_other_neurons}
+In the future, we plan to include other types of neuron models, such as the leaky integrate-\/and-\/fire model, the adaptive exponential integrate-\/and-\/fire model, and a compartmental model.\hypertarget{ch3_neurons_synapses_groups_ch3s2_synapses}{}\section{3.\+2 Synapses}\label{ch3_neurons_synapses_groups_ch3s2_synapses}
+\begin{DoxyAuthor}{Author}
+Kristofor D. Carlson
+\end{DoxyAuthor}
+Spiking neural networks deliver information using spikes via structures called synapses. In biology, synapses pass information from one neuron to another via a chemical signal (electrical synapses also exist but are not modeled in C\+A\+R\+Lsim). Communication between synapses is, in general, unidirectional. Synapses are broken into two components\+: one component located on the neuron sending the information (the presynaptic neuron) and one component located on the neuron receiving the information (the postsynaptic neuron). The two synapse components are separated by a physical gap between the pre and postsynaptic neurons called the synaptic cleft. Information is passed from the presynaptic neuron to the postsynaptic neuron when the presynaptic component of the synapse releases neurotransmitters that cross the synaptic cleft and bind to postsynaptic receptors that result in a current influx into the postsynaptic neuron. The sum of many synaptic current contributions change the postsynaptic neuron voltage, causing it to spike if the voltage threshold is crossed.
+
+C\+A\+R\+Lsim supports two synapse model descriptions. The current-\/based (C\+U\+BA) description uses a single synaptic current term while the conductance-\/based (C\+O\+BA) description calculates the synaptic current using more complex conductance equations for each synaptic receptor-\/type. Both C\+U\+BA and C\+O\+BA current contributions are influenced by the synaptic weight of the synapse. We next discuss each synapse model specifically.
+
+(see ch4\+\_\+connections).\hypertarget{ch3_neurons_synapses_groups_ch3s2s1_cuba}{}\subsection{3.\+2.\+1 C\+U\+BA}\label{ch3_neurons_synapses_groups_ch3s2s1_cuba}
+When current based (C\+U\+BA) mode is used, no conductances are present. The strength of the resulting current is directly proportional to the synaptic weight. Additionally, the total synaptic current at postsynaptic neuron $j$, $ I_{j}^{syn} $, due to a spike from presynaptic neuron $i$ is given at any point in time by (5)\+:
+
+\begin{align*} I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} & \text{(5)} \end{align*}
+
+where $s_{ij}$ is 1 if the neuron is spiking and 0 otherwise, $w_{ij}$ is the strength of the synaptic weight between postsynaptic neuron $j$ and presynaptic neuron $i$, and N is the total amount of presynaptic connections onto postsynaptic neuron $j$.
+
+C\+U\+BA mode is the default behavior of all neurons. C\+A\+R\+Lsim does not currently support mixed modes consisting of some neurons with conductances and others without conductances in the same simulation.
+
+\begin{DoxyNote}{Note}
+Because C\+U\+BA mode has synaptic currents that last for a single time step, and C\+O\+BA mode has synaptic currents that decay over time, switching from C\+U\+BA mode to C\+O\+BA mode usually requires the user to reduce the synaptic weights as the resulting currents will be much larger in C\+O\+BA mode.
+\end{DoxyNote}
+\hypertarget{ch3_neurons_synapses_groups_ch3s2s2_coba}{}\subsection{3.\+2.\+2 C\+O\+BA}\label{ch3_neurons_synapses_groups_ch3s2s2_coba}
+When conductance-\/based (C\+O\+BA) mode is used, there are conductances with exponential decays present. If the synaptic connection is excitatory then A\+M\+PA and N\+M\+DA decay values are used. If the synaptic connection is inhibitory then G\+A\+BA A and G\+A\+BA B decay values are used. Equation (6) shows the corresponding current, $I_{ij}$ in postsynaptic neuron $j$, due to inputs from N presynaptic neurons (denoted by $i$).
+
+\begin{align*} I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} & \text{(6)} \end{align*}
+
+Here we drop the $i,j$ notation and assume the $g$ values pertain to a specific synapse ( $i,j$) and the $v$ values pertain to a specific postsynaptic neuron, $j$. The total current from a particular synapse can either be excitatory ( $i_{e}$) or inhibitory ( $i_{i}$). They are described in equations (7) and (8), below\+:
+
+\begin{align*} i_{e} = & ~ i_{NMDA} + i_{AMPA} & \text{(7)} \\ i_{i} = & ~ i_{GABA_{A}} + i_{GABA_{B}} & \text{(8)} \end{align*}
+
+The excitatory current is comprised of an A\+M\+PA current ( $i_{AMPA}$) and a voltage dependent N\+M\+DA current ( $i_{NMDA}$). They are described in equations (9) and (10).
+
+\begin{align*} i_{AMPA} = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text{(9)} \\ i_{NMDA} = & ~ g_{NMDA}\frac{\Big[\frac{v+80}{60} \Big]^{2}}{1+\Big[\frac{v+80}{60} \Big]^{2}} (v-v^{rev}_{NMDA}) & \text{(10)} \end{align*}
+
+Here, $g$ is the conductance, $v$ is the postsynaptic voltage, and $v^{rev}$ is the reversal potential. Both $g$ and $v^{rev}$ are specific to a particular ion channel/receptor. The inhibitory current is comprised of a G\+A\+BA A current ( $i_{GABA_A}$) and a G\+A\+BA B current ( $i_{GABA_B}$) shown in equations (11) and (12).
+
+\begin{align*} i_{GABA_{A}} = & ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) & \text{(11)} \\ i_{GABA_{B}} = & ~ g_{GABA_{B}}(v-v^{rev}_{GABA_{B}}) & \text{(12)} \end{align*}
+
+The conductance, $g$, for each ion channel/receptor, $k$ is given in the general form equation (13).
+
+\begin{align*} g_{k} = & ~ \sum \limits_{f} e^{t-t_{f}/ \tau} \Theta(t-t_f) & \text{(13)} \end{align*}
+
+Where $f$ indicates a particular spike event, $t_f$ represents the time of this spike event, and $ \Theta $ is the Heaviside function.
+
+The code snippet below shows how a user would first set a simulation that uses conductances using the C\+A\+R\+Lsim\+::set\+Conductances function. If the C\+A\+R\+Lsim\+::set\+Conductances is called with just the true argument\+:
+
+
+\begin{DoxyCode}
+sim.setConductances(\textcolor{keyword}{true});
+\end{DoxyCode}
+
+
+then, the default decay constant values will be used for the conductances (td\+A\+M\+PA=5ms, td\+N\+M\+DA=150ms, td\+G\+A\+B\+Aa=6ms, td\+G\+A\+B\+Ab=150ms) (instantaneous rise time).
+
+The user can also specify the decay constant times themselves\+:
+
+
+\begin{DoxyCode}
+sim.setConductances(\textcolor{keyword}{true},tdAMPA,tdNMDA,tdGABAa,tdGABAb);
+\end{DoxyCode}
+
+
+It should be noted that users can specify a rise time constant for the slow the synaptic conductances (N\+M\+DA and G\+A\+B\+Ab) in addition to specifying a decay time constant. The rise time constants are set to zero by default. Below we show a user setting the rise times\+:
+
+
+\begin{DoxyCode}
+sim.setConductances(\textcolor{keyword}{true},tdAMPA,tdNMDA,trNMDA,tdGABAa,tdGABAb,trGABAb);
+\end{DoxyCode}
+
+
+Users can also explicitly set the default conductance time constant parameters to be used in the simulation with the command C\+A\+R\+Lsim\+::set\+Default\+Conductance\+Time\+Constants.
+
+
+\begin{DoxyCode}
+sim.setDefaultConductanceTimeConstants(tdAMPA,tdNMDA,trNMDA,tdGABAa,tdGABAb,trGABAb);
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+A pre-\/synaptic spike increases both post-\/synaptic A\+M\+PA and N\+M\+DA (G\+A\+B\+Aa and G\+A\+B\+Ab) for excitatory (inhibitory) connections. 
+
+Receptor-\/specific gain factors can be speficied to vary the A\+M\+P\+A-\/\+N\+M\+DA and G\+A\+B\+Aa-\/\+G\+A\+BA ratio
+\end{DoxyNote}
+see ch4s1s4\+\_\+receptor\+\_\+gain\hypertarget{ch3_neurons_synapses_groups_ch3s3_groups}{}\section{3.\+3 Groups}\label{ch3_neurons_synapses_groups_ch3s3_groups}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+\hypertarget{ch3_neurons_synapses_groups_ch3s3s1_creating_groups}{}\subsection{3.\+3.\+1 Creating Groups}\label{ch3_neurons_synapses_groups_ch3s3s1_creating_groups}
+To create a group of Izhikevich neurons, simply specify a name (e.\+g., \char`\"{}output\char`\"{}), the number of neurons (e.\+g., 100), and a type\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} gOut = sim.createGroup(\textcolor{stringliteral}{"output"}, 100, EXCITATORY\_NEURON);
+\end{DoxyCode}
+ Here, \+::\+E\+X\+C\+I\+T\+A\+T\+O\+R\+Y\+\_\+\+N\+E\+U\+R\+ON denotes that the neurons in the group are glutamatergic. Neurons with G\+A\+B\+Aergic synapses are supported with the \+::\+I\+N\+H\+I\+B\+I\+T\+O\+R\+Y\+\_\+\+N\+E\+U\+R\+ON keyword.
+
+To refer to this group in later method calls, the C\+A\+R\+Lsim\+::create\+Group method returns a group ID, {\ttfamily g\+Out}.
+
+Next, specify the Izhikevich parameters, in this case for class 1 excitability (regular spiking) neurons (see \hyperlink{ch3_neurons_synapses_groups_ch3s1s1_izhikevich_neurons4}{3.\+1.\+1 Izhikevich Neurons (4-\/\+Parameter Model)})\+: 
+\begin{DoxyCode}
+sim.setNeuronParameters(gOut, 0.02f, 0.2f, -65.0f, 8.0f);
+\end{DoxyCode}
+ where 0.\+02f, 0.\+2f, -\/65.\+0f, and 8.\+0f correspond respectively to the a, b, c, and d parameters of the Izhikevich neuron. Note we used {\ttfamily g\+Out} from the {\ttfamily create\+Group} call above to reference the group ID.
+
+To create a group of spike generators, the user also specifies a name, size, and type\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} gIn = sim.createSpikeGeneratorGroup(\textcolor{stringliteral}{"input"}, 10, EXCITATORY\_NEURON);
+\end{DoxyCode}
+\hypertarget{ch3_neurons_synapses_groups_ch3s3s2_topography}{}\subsection{3.\+3.\+2 Topography}\label{ch3_neurons_synapses_groups_ch3s3s2_topography}
+Neurons in a group can be arranged into a (up to) three-\/dimensional (primitive cubic) grid using the \+::\+Grid3D struct, and connections can be specified depending on the relative placement of neurons via C\+A\+R\+Lsim\+::connect. This allows for the creation of networks with complex spatial structure.
+
+Each neuron in the group gets assigned a (x,y,z) location on a 3D grid centered around the origin, so that calling Grid3\+D(\+Nx,\+Ny,\+Nz) creates coordinates that fall in the range \mbox{[}-\/(Nx-\/1)/2, (Nx-\/1)/2\mbox{]}, \mbox{[}-\/(Ny-\/1)/2, (Ny-\/1)/2\mbox{]}, and \mbox{[}-\/(Nz-\/1)/2, (Nz-\/1)/2\mbox{]}. The resulting grid is a primitive cubic Bravais lattice with cubic side length 1 (arbitrary units). The primitive (or simple) cubic crystal system consists of one lattice point (neuron) on each corner of the cube. Each neuron at a lattice point is then shared equally between eight adjacent cubes. An example is shown in the figure below.
+
+ Examples\+:
+\begin{DoxyItemize}
+\item Grid3\+D(1,1,1) will create a single neuron with location (0,0,0).
+\item Grid3\+D(2,1,1) will create two neurons, where the first neuron (ID 0) has location (-\/0.\+5,0,0), and the second neuron (ID 1) has location (0.\+5,0,0).
+\item Grid3\+D(1,1,2) will create two neurons, where the first neuron (ID 0) has location (0,0,-\/0.\+5), and the second neuron (ID 1) has location (0,0,0.\+5).
+\item Grid3\+D(2,2,2) will create eight neurons, where the first neuron (ID 0) has location (-\/0.\+5,-\/0.\+5,-\/0.\+5), the second neuron has location (0.\+5,-\/0.\+5,-\/0.\+5), the third has (-\/0.\+5,0.\+5,-\/0.\+5), and so forth (see figure below).
+\item Grid3\+D(3,3,3) will create 3x3x3=27 neurons, where the first neuron (ID 0) has location (-\/1,-\/1,-\/1), the second neuron has location (0,-\/1,-\/1), the third has (1,-\/1,-\/1), the fourth has (-\/1,0,-\/1), ..., and the last one has (1,1,1).
+\item etc.
+\end{DoxyItemize}
+
+The 3D location of a neuron can be queried in all C\+A\+R\+Lsim states using the method C\+A\+R\+Lsim\+::get\+Neuron\+Location3D. This allows, for example, for user-\/defined connections to be built based on 3D location (see ch4s3\+\_\+user\+\_\+defined).
+
+The following code snippet creates a group of 500 excitatory neurons arranged on a 10x10x5 three-\/dimensional (primitive cubic) grid\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} gOut = sim.createGroup(\textcolor{stringliteral}{"output"}, Grid3D(10,10,5), EXCITATORY\_NEURON);
+\end{DoxyCode}
+
+
+Note that in this example, the \+::\+Grid3D parameter replaces the integer values (for number of neurons) used for C\+A\+R\+Lsim\+::create\+Group in \hyperlink{ch3_neurons_synapses_groups_ch3s3s1_creating_groups}{3.\+3.\+1 Creating Groups}. In fact, creating a group with N neurons is the same as arranging N neurons on a Nx1x1 grid\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} gOut = sim.createGroup(\textcolor{stringliteral}{"output"}, N, EXCITATORY\_NEURON);             \textcolor{comment}{// these two function calls}
+\textcolor{keywordtype}{int} gOut = sim.createGroup(\textcolor{stringliteral}{"output"}, Grid3D(N,1,1), EXCITATORY\_NEURON); \textcolor{comment}{// are equivalent}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+ch4s1s3\+\_\+radius\+RF 
+
+ch4s1s8\+\_\+gaussian 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch3_neurons_synapses_groups_ch3s5_refs}{}\section{3.\+5 References}\label{ch3_neurons_synapses_groups_ch3s5_refs}
+Izhikevich E.\+M. (2003) Simple Model of Spiking Neurons. I\+E\+EE Transactions on Neural Networks, 14\+:1569-\/1572.
+
+Izhikevich E.\+M. (2004) Which Model to Use for Cortical Spiking Neurons? I\+E\+EE Transactions on Neural Networks, 15\+:1063-\/1070.
+
+Izhikevich E.\+M. (2007) Dynamical Systems in Neuroscience -\/ The Geometry of Excitability and Bursting. 

@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage{epsfig}
+\pagestyle{empty}
+\begin{document}
+\begin{align*} \frac{dv}{dt} = & ~ 0.04v^2 + 5v + 140 - u + I & \text{(1)}\\ \frac{du}{dt} = & ~ a (bv - u) & \text{(2)} \end{align*}
+\pagebreak
+
+$v$
+\pagebreak
+
+$I$
+\pagebreak
+
+$I = i_{syn} + I_{ext}$
+\pagebreak
+
+$u$
+\pagebreak
+
+$a$
+\pagebreak
+
+$b$
+\pagebreak
+
+$t$
+\pagebreak
+
+$a, b, c, d$
+\pagebreak
+
+$v_{cutoff}=+30$
+\pagebreak
+
+\begin{align*} v(v>30) = & ~ c & \text{(3)}\\ u(v>30) = & ~ u + d & \text{(4)}\end{align*}
+\pagebreak
+
+$a=0.02, b=0.2, c=-65, d=8$
+\pagebreak
+
+$a=0.1, b=0.2, c=-65, d=2)$
+\pagebreak
+
+\begin{align*} \frac{dv}{dt} = & ~ (k (v - vr) (v - vt) - u + I) / C & \text{(5)}\\ \end{align*}
+\pagebreak
+
+$k$
+\pagebreak
+
+$vr$
+\pagebreak
+
+$vt$
+\pagebreak
+
+$C$
+\pagebreak
+
+\begin{align*} \frac{dv}{dt} = & ~ a (b (v - vr) - u) & \text{(6)}\\ \end{align*}
+\pagebreak
+
+$C, k, vr, vt, a, b, vpeak, c, d$
+\pagebreak
+
+$v_{cutoff}=+vpeak$
+\pagebreak
+
+\begin{align*} v(v>vpeak) = & ~ c & \text{(7)}\\ u(v>vpeak) = & ~ u + d & \text{(8)}\end{align*}
+\pagebreak
+
+$C=100, k=0.7, vr=-60, vt=-40, a=0.03, b=-2.0, vpeak=35, c=-50, d=100$
+\pagebreak
+
+$C=20, k=1, vr=-55, vt=-40, a=0.15, b=8, vpeak=25, c=-55, d=200)$
+\pagebreak
+
+$i_{dendr}$
+\pagebreak
+
+$I = i_{syn} + i_{dendr} + I_{ext}$
+\pagebreak
+
+\begin{align*} i_{dendr} = & G_{down} (v - v_{down}) + \sum \limits_{up} G_{up} (v - v_{up}) & \text{(9)} \end{align*}
+\pagebreak
+
+$G_{up}$
+\pagebreak
+
+$G_{down}$
+\pagebreak
+
+$j$
+\pagebreak
+
+$ I_{j}^{syn} $
+\pagebreak
+
+$i$
+\pagebreak
+
+\begin{align*} I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} & \text{(5)} \end{align*}
+\pagebreak
+
+$s_{ij}$
+\pagebreak
+
+$w_{ij}$
+\pagebreak
+
+$I_{ij}$
+\pagebreak
+
+\begin{align*} I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} & \text{(6)} \end{align*}
+\pagebreak
+
+$i,j$
+\pagebreak
+
+$g$
+\pagebreak
+
+$i_{e}$
+\pagebreak
+
+$i_{i}$
+\pagebreak
+
+\begin{align*} i_{e} = & ~ i_{NMDA} + i_{AMPA} & \text{(7)} \\ i_{i} = & ~ i_{GABA_{A}} + i_{GABA_{B}} & \text{(8)} \end{align*}
+\pagebreak
+
+$i_{AMPA}$
+\pagebreak
+
+$i_{NMDA}$
+\pagebreak
+
+\begin{align*} i_{AMPA} = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text{(9)} \\ i_{NMDA} = & ~ g_{NMDA}\frac{\Big[\frac{v+80}{60} \Big]^{2}}{1+\Big[\frac{v+80}{60} \Big]^{2}} (v-v^{rev}_{NMDA}) & \text{(10)} \end{align*}
+\pagebreak
+
+$v^{rev}$
+\pagebreak
+
+$i_{GABA_A}$
+\pagebreak
+
+$i_{GABA_B}$
+\pagebreak
+
+\begin{align*} i_{GABA_{A}} = & ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) & \text{(11)} \\ i_{GABA_{B}} = & ~ g_{GABA_{B}}(v-v^{rev}_{GABA_{B}}) & \text{(12)} \end{align*}
+\pagebreak
+
+\begin{align*} g_{k} = & ~ \sum \limits_{f} e^{t-t_{f}/ \tau} \Theta(t-t_f) & \text{(13)} \end{align*}
+\pagebreak
+
+$f$
+\pagebreak
+
+$t_f$
+\pagebreak
+
+$ \Theta $
+\pagebreak
+
+\end{document}

@@ -1,0 +1,183 @@
+\hypertarget{ch12_advanced_topics_ch12s1_best_practices}{}\section{12.\+1 Best Practices}\label{ch12_advanced_topics_ch12s1_best_practices}
+\hypertarget{ch12_advanced_topics_ch12s1s1_tips_tricks}{}\subsection{12.\+1.\+1 Tips and Tricks, Do\textquotesingle{}s and Don\textquotesingle{}ts}\label{ch12_advanced_topics_ch12s1s1_tips_tricks}
+Spike\+Monitors and Connection\+Monitors, while very useful, can easily slow simulations down. They should be used for brief periods of time as opposed to the entire duration of the simulation. Additonally, it makes sense to target the exact group or connection you care about as opposed to all neurons or synapses in the simulation.\hypertarget{ch12_advanced_topics_ch12s1s2_speed_up}{}\subsection{12.\+1.\+2 Ways to Speed Up Your Simulation}\label{ch12_advanced_topics_ch12s1s2_speed_up}
+As mentioned above, leaving Spike or Connection\+Monitors on running for a long period of time or over a large group of neurons will slow the simulation down dramatically. Although many state variables are updated every timestep (ms), C\+A\+R\+Lsim performs more calculations as the number of spikes grow. Therefore simulations with high firing rates will necessarily slow the simulation down as well. A common trick to speed up simulations that have a training and testing phase is to train the S\+NN and then output the network state (with synaptic weights) to preserve the training using save\+Simulation. The network state can then be reloaded using load\+Simulation. In this way, users can load a pre-\/trained network anytime they wish without incurring the cost of training.
+
+\begin{DoxySeeAlso}{See also}
+ch7s1\+\_\+spike\+\_\+monitor
+\end{DoxySeeAlso}
+\hypertarget{ch12_advanced_topics_ch12s2_num_int}{}\section{12.\+2 Numerical Integration Methods}\label{ch12_advanced_topics_ch12s2_num_int}
+C\+A\+R\+Lsim currently supports forward-\/\+Euler and fourth-\/order Runge Kutta for the numerical integration of O\+D\+Es.
+
+The integration method and integration time step can be specified via C\+A\+R\+Lsim\+::set\+Integration\+Method. By default, the simulation uses forward-\/\+Euler with a basic integration step of 0.\+5ms.
+
+The specified integration method will apply to all neurons in the network. Future C\+A\+R\+Lsim versions might allow to specify the integration method on a per-\/group basis.
+
+In contrast to the {\itshape integration} time step, the {\itshape simulation} time step is always 1ms, meaning that spike times cannot be retrieved with sub-\/millisecond precision. Future C\+A\+R\+Lsim versions might allow for sub-\/millisecond spike times.\hypertarget{ch12_advanced_topics_ch12s2s1_euler}{}\subsection{12.\+2.\+1 Euler Method}\label{ch12_advanced_topics_ch12s2s1_euler}
+By default, C\+A\+R\+Lsim uses the forward (or standard) Euler method with an integration step of 0.\+5ms for numerical stability. This can be set explicitly with the following function call\+:
+
+
+\begin{DoxyCode}
+sim.setIntegrationMethod(FORWARD\_EULER, numStepsPerMs);
+\end{DoxyCode}
+
+
+where {\ttfamily num\+Steps\+Per\+Ms} is the number of integration steps to perform per 1ms.
+
+We suggest the number of time steps be at least 2 when working with the 4-\/parameter Izhikevich model (see ch3s1s1\+\_\+izhikevich\+\_\+neurons4). We do not recommend to use forward-\/\+Euler when working with the 9-\/parameter Izhikevich or compartmental models (see ch3s1s2\+\_\+izhikevich\+\_\+neurons9 and ch3s1s3\+\_\+compartments).
+
+\begin{DoxyNote}{Note}
+The recovery variable of the Izhikevich model is always integrated using forward-\/\+Euler. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+ch3s1\+\_\+neurons 
+
+\hyperlink{ch12_advanced_topics_ch12s2s2_RK4}{12.\+2.\+2 Runge-\/\+Kutta Method}
+\end{DoxySeeAlso}
+\hypertarget{ch12_advanced_topics_ch12s2s2_RK4}{}\subsection{12.\+2.\+2 Runge-\/\+Kutta Method}\label{ch12_advanced_topics_ch12s2s2_RK4}
+\begin{DoxyAuthor}{Author}
+Stanislav Listopad 
+
+Michael Beyeler
+\end{DoxyAuthor}
+C\+A\+R\+Lsim also supports the use of fourth-\/order Runge-\/\+Kutta (also referred to as \char`\"{}\+R\+K4\char`\"{}, \char`\"{}classical Runge-\/\+Kutta method\char`\"{}, or simply as \char`\"{}\textbackslash{}em the Runge-\/\+Kutta method\char`\"{}).
+
+This can be specified with the following function call\+:
+
+
+\begin{DoxyCode}
+sim.setIntegrationMethod(RUNGE\_KUTTA4, numStepsPerMs);
+\end{DoxyCode}
+
+
+where {\ttfamily num\+Steps\+Per\+Ms} is the number of integration steps to perform per 1ms.
+
+We suggest the number of time steps be at least 10 when working with compartmental neurons (see ch3s1s3\+\_\+compartments).
+
+\begin{DoxyNote}{Note}
+Note that the higher num\+Steps\+Per\+Ms the slower the simulation may be, due to increased computational load. 
+
+The recovery variable of the Izhikevich model is always integrated using forward-\/\+Euler. 
+\end{DoxyNote}
+\begin{DoxySince}{Since}
+v3.\+1
+\end{DoxySince}
+\hypertarget{ch12_advanced_topics_ch12s3_multi_gpu}{}\section{12.\+3 Multi-\/\+G\+P\+U Support}\label{ch12_advanced_topics_ch12s3_multi_gpu}
+C\+A\+R\+Lsim is now threadsafe so a distinct C\+A\+R\+Lsim simulation can be run on every G\+PU device on the machine.
+
+Full multi-\/\+G\+PU support will be added in C\+A\+R\+Lsim 4.\hypertarget{ch12_advanced_topics_ch12s4_online_weight_tuning}{}\section{12.\+4 On-\/\+Line Weight Tuning}\label{ch12_advanced_topics_ch12s4_online_weight_tuning}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+C\+A\+R\+Lsim provides a range of handy functions to change weight values on the fly; that is, without having to recompile the network. The utility Simple\+Weight\+Tuner implements a simple weight search algorithm inspired by the bisection method. The function C\+A\+R\+Lsim\+::set\+Weight allows a user to change the weight of a single synapse. Alternatively, C\+A\+R\+Lsim\+::bias\+Weights can be used to add a constant bias to every weight of a certain connection ID, and C\+A\+R\+Lsim\+::scale\+Weights multiplies all the weights with a scaling factor.
+
+These functions are useful especially for tuning feedforward weights in large-\/scale networks that would otherwise take a lot of time to repeatedly build. For tuning in more complex situations please refer to ch10\+\_\+ecj.
+
+These functions are only valid in \+::carlsim\+State\+\_\+t \+::\+R\+U\+N\+\_\+\+S\+T\+A\+TE and do not alter the topography of the network. They apply to weight values of already allocated synapses only.
+
+\begin{DoxySeeAlso}{See also}
+ch10\+\_\+ecj
+\end{DoxySeeAlso}
+\hypertarget{ch12_advanced_topics_ch12s4s1_simple_weight_tuner}{}\subsection{12.\+4.\+1 Simple Weight Tuner}\label{ch12_advanced_topics_ch12s4s1_simple_weight_tuner}
+The Simple\+Weight\+Tuner utility is a class that allows tuning of weight values of a specific connection (i.\+e., a collection of synapses), so that a specific neuron group fires at a predefined target firing rate---without having to recompile the C\+A\+R\+Lsim network.
+
+A complete example is explained in tut4\+\_\+simple\+\_\+weight\+\_\+tuner.
+
+Consider a C\+A\+R\+Lsim network with an input group ({\ttfamily g\+In}) connected to an output group ({\ttfamily g\+Out}). Suppose the goal is to find weight values that lead to some desired output activity (say, 27.\+4\+Hz), in response to some Poissonian input. A conventional approach to solving this problem would be to repeatedly build and run the network with different weight values, until some values are found that let {\ttfamily g\+Out} approach the desired target firing rate. This process can be tedious, especially when dealing with large-\/scale networks that take a long time to build.
+
+Instead, one can use a Simple\+Weight\+Tuner\+: 
+\begin{DoxyCode}
+SimpleWeightTuner SWT(sim, 0.01, 100); \textcolor{comment}{// CARLsim object, error margin, max iterations}
+SWT.setConnectionToTune(c0, 0.0);      \textcolor{comment}{// connection to tune, initial weight}
+SWT.setTargetFiringRate(gOut, 27.4);   \textcolor{comment}{// output group to observe, target firing rate (Hz)}
+\end{DoxyCode}
+ The Simple\+Weight\+Tuner constructor accepts a pointer to the above created network {\ttfamily sim} and some termination conditions\+: The algorithm will terminate if either the absolute error between observed firing rate and target firing rate is smaller than some error margin, or upon reaching the maximum number of iterations. Calling Simple\+Weight\+Tuner\+::set\+Connection\+To\+Tune informs the class about which connection to tune and with which weight to start. The algorithm will repeatedly change the weights in a way that resembles the bisection method, until the mean firing rate of group {\ttfamily g\+Out} reaches 27.\+4 +-\/ 0.\+01 Hz (specified via Simple\+Weight\+Tuner\+::set\+Target\+Firing\+Rate). Note that the here involved connection ({\ttfamily c0}) and neuron group ({\ttfamily g\+Out}) can be completely independent from each other.
+
+All that is left to do is to execute the algorithm until finished\+: 
+\begin{DoxyCode}
+\textcolor{keywordflow}{while} (!SWT.done()) \{
+    SWT.iterate();
+\}
+\end{DoxyCode}
+ This will run {\ttfamily sim} repeatedly for one second (for different time periods pass an optional argument) until one of the termination criteria is reached.
+
+\begin{DoxyNote}{Note}
+The connection to tune and the neuron group for which a target firing rate are found do not have to be associated with each other. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+ch10\+\_\+ecj 
+
+tut4\+\_\+simple\+\_\+weight\+\_\+tuner 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch12_advanced_topics_ch12s4s2_set_weight}{}\subsection{12.\+4.\+2 Setting the Weight of a Single Synapse}\label{ch12_advanced_topics_ch12s4s2_set_weight}
+The easiest way to change the weight of a synapse is C\+A\+R\+Lsim\+::set\+Weight\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// must be in RUN state}
+sim.runNetwork(1,0);
+
+\textcolor{comment}{// remember connId from connect call}
+\textcolor{comment}{// change the weight from first pre-neuron to fifth post-neuron to 0.25f}
+\textcolor{comment}{// make sure this synapse this allocated!}
+sim.setWeight(connId, 0, 4, 0.25f);
+\end{DoxyCode}
+ This function will set the weight of a particular synapse of connection ID {\ttfamily conn\+Id}, namely the synapse connecting neuron {\ttfamily neur\+Id\+Pre} to neuron {\ttfamily neur\+Id\+Post}, to value {\ttfamily weight}. Here, the connection ID is the return argument of the corresponding C\+A\+R\+Lsim\+::connect call. Also, neuron I\+Ds should be zero-\/indexed, meaning that the first neuron in the group should have ID 0.
+
+If the specified weight lies outside the boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}} of Range\+Weight, then two different behaviors can be achieved, depending on a fifth optional argument {\ttfamily update\+Weight\+Range}.
+\begin{DoxyItemize}
+\item If {\ttfamily update\+Weight\+Range} is set to {\ttfamily true}, then the corresponding weight boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}} will be updated should the specified weight lie outside those boundaries.
+\item If {\ttfamily update\+Weight\+Range} is set to {\ttfamily false}, then the corresponding weight will be clipped so that it stays within the existing weight boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}}.
+\end{DoxyItemize}
+
+\begin{DoxyAttention}{Attention}
+Make sure this function is called on a synapse that actually exists! 
+\end{DoxyAttention}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch12_advanced_topics_ch12s4s3_bias_weights}{}\subsection{12.\+4.\+3 Add a Bias to All the Weights of a Connection}\label{ch12_advanced_topics_ch12s4s3_bias_weights}
+Alternatively, it is possible to change the weights of all the synapses that belong to a certain connection ID using C\+A\+R\+Lsim\+::bias\+Weights\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// must be in RUN state}
+sim.runNetwork(1,0);
+
+\textcolor{comment}{// remember connId from connect call}
+\textcolor{comment}{// add 0.125 to all allocated synapses of connId}
+\textcolor{comment}{// set updateWeightRange flag to true in order to update [minWt,maxWt] if necessary}
+sim.biasWeights(connId, 0.125f, \textcolor{keyword}{true});
+\end{DoxyCode}
+ This function will add a constant {\ttfamily bias} to the weight of every synapse of connection ID {\ttfamily conn\+Id}. Here, the connection ID is the return argument of the corresponding C\+A\+R\+Lsim\+::connect call. Also, neuron I\+Ds should be zero-\/indexed, meaning that the first neuron in the group should have ID 0.
+
+If the new weight (old weight plus bias) lies outside the boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}} of Range\+Weight, then two different behaviors can be achieved, depending on a third optional argument {\ttfamily update\+Weight\+Range}.
+\begin{DoxyItemize}
+\item If {\ttfamily update\+Weight\+Range} is set to {\ttfamily true}, then the corresponding weight boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}} will be updated should the new weight lie outside those boundaries.
+\item If {\ttfamily update\+Weight\+Range} is set to {\ttfamily false}, then the corresponding weight will be clipped so that it stays within the existing weight boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}}.
+\end{DoxyItemize}
+
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch12_advanced_topics_ch12s4s4_scale_weights}{}\subsection{12.\+4.\+4 Scale All the Weigths of a Connection}\label{ch12_advanced_topics_ch12s4s4_scale_weights}
+Alternatively, it is possible to change the weights of all the synapses that belong to a certain connection ID using C\+A\+R\+Lsim\+::scale\+Weights\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// must be in RUN state}
+sim.runNetwork(1,0);
+
+\textcolor{comment}{// remember connId from connect call}
+\textcolor{comment}{// multiply all allocated synapses of connId with scaling factor 1.345}
+\textcolor{comment}{// set updateWeightRange flag to true because it will be necessary to update [minWt,maxWt]}
+sim.scaleWeights(connId, 1.345f, \textcolor{keyword}{false});
+\end{DoxyCode}
+ This function will multiply the weight of every synapse of connection ID {\ttfamily conn\+Id} with a scaling factor {\ttfamily scale}. Here, the connection ID is the return argument of the corresponding C\+A\+R\+Lsim\+::connect call. Also, neuron I\+Ds should be zero-\/indexed, meaning that the first neuron in the group should have ID 0.
+
+If the new weight (old weight times scaling factor) lies outside the boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}} of Range\+Weight, then two different behaviors can be achieved, depending on a third optional argument {\ttfamily update\+Weight\+Range}.
+\begin{DoxyItemize}
+\item If {\ttfamily update\+Weight\+Range} is set to {\ttfamily true}, then the corresponding weight boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}} will be updated should the new weight lie outside those boundaries.
+\item If {\ttfamily update\+Weight\+Range} is set to {\ttfamily false}, then the corresponding weight will be clipped so that it stays within the existing weight boundaries {\ttfamily \mbox{[}min\+Wt,max\+Wt\mbox{]}}.
+\end{DoxyItemize}
+
+\begin{DoxySince}{Since}
+v3.\+0 
+\end{DoxySince}

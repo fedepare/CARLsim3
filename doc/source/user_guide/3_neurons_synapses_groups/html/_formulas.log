@@ -1,0 +1,765 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=latex 2017.4.8)  9 APR 2017 11:32
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**_formulas.tex
+(./_formulas.tex
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 3 language(s) loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 95.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/dvips.def
+File: dvips.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+\epsfxsize=\dimen105
+\epsfysize=\dimen106
+)
+No file _formulas.aux.
+\openout1 = `_formulas.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5 \begin{align*}
+                   \frac{dv}{dt} = & ~ 0.04v^2 + 5v + 140 - u + I & \text{(1...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.5 \begin{align*} \frac{dv}{dt}
+                                 = & ~ 0.04v^2 + 5v + 140 - u + I & \text{(1...
+
+? 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 5.
+! Extra }, or forgotten $.
+\frac #1#2->{\begingroup #1\endgroup \over #2}
+                                              
+l.5 \begin{align*} \frac{dv}{dt}
+                                 = & ~ 0.04v^2 + 5v + 140 - u + I & \text{(1...
+
+? 
+! Misplaced alignment tab character &.
+l.5 \begin{align*} \frac{dv}{dt} = &
+                                     ~ 0.04v^2 + 5v + 140 - u + I & \text{(1...
+
+? 
+! Misplaced alignment tab character &.
+l.5 ...{dv}{dt} = & ~ 0.04v^2 + 5v + 140 - u + I &
+                                                   \text{(1)}\\ \frac{du}{dt...
+
+? 
+! Undefined control sequence.
+l.5 ...t} = & ~ 0.04v^2 + 5v + 140 - u + I & \text
+                                                  {(1)}\\ \frac{du}{dt} = & ...
+
+? 
+! Misplaced alignment tab character &.
+l.5 ...40 - u + I & \text{(1)}\\ \frac{du}{dt} = &
+                                                   ~ a (bv - u) & \text{(2)}...
+
+? 
+! Misplaced alignment tab character &.
+l.5 ...ext{(1)}\\ \frac{du}{dt} = & ~ a (bv - u) &
+                                                   \text{(2)} \end{align*}
+? 
+! Undefined control sequence.
+l.5 ...)}\\ \frac{du}{dt} = & ~ a (bv - u) & \text
+                                                  {(2)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5 ... = & ~ a (bv - u) & \text{(2)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.5 ... = & ~ a (bv - u) & \text{(2)} \end{align*}
+                                                  
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.5 ... = & ~ a (bv - u) & \text{(2)} \end{align*}
+                                                  
+? 
+[1
+
+] [2] [3] [4] [5] [6] [7] [8] [9] [10]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35 \begin{align*}
+                    v(v>30) = & ~ c & \text{(3)}\\ u(v>30) = & ~ u + d & \te...
+
+? 
+! Misplaced alignment tab character &.
+l.35 \begin{align*} v(v>30) = &
+                                ~ c & \text{(3)}\\ u(v>30) = & ~ u + d & \te...
+
+? 
+! Misplaced alignment tab character &.
+l.35 \begin{align*} v(v>30) = & ~ c &
+                                      \text{(3)}\\ u(v>30) = & ~ u + d & \te...
+
+? 
+! Undefined control sequence.
+l.35 \begin{align*} v(v>30) = & ~ c & \text
+                                           {(3)}\\ u(v>30) = & ~ u + d & \te...
+
+? 
+! Misplaced alignment tab character &.
+l.35 ...v(v>30) = & ~ c & \text{(3)}\\ u(v>30) = &
+                                                   ~ u + d & \text{(4)}\end{...
+
+? 
+! Misplaced alignment tab character &.
+l.35 ...& ~ c & \text{(3)}\\ u(v>30) = & ~ u + d &
+                                                   \text{(4)}\end{align*}
+? 
+! Undefined control sequence.
+l.35 ...& \text{(3)}\\ u(v>30) = & ~ u + d & \text
+                                                  {(4)}\end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35 ...v>30) = & ~ u + d & \text{(4)}\end{align*}
+                                                  
+? 
+[11] [12] [13]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.44 \begin{align*}
+                    \frac{dv}{dt} = & ~ (k (v - vr) (v - vt) - u + I) / C & ...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 \begin{align*} \frac{dv}{dt}
+                                  = & ~ (k (v - vr) (v - vt) - u + I) / C & ...
+
+? 
+! Extra }, or forgotten $.
+\frac #1#2->{\begingroup #1\endgroup \over #2}
+                                              
+l.44 \begin{align*} \frac{dv}{dt}
+                                  = & ~ (k (v - vr) (v - vt) - u + I) / C & ...
+
+? 
+! Misplaced alignment tab character &.
+l.44 \begin{align*} \frac{dv}{dt} = &
+                                      ~ (k (v - vr) (v - vt) - u + I) / C & ...
+
+? 
+! Misplaced alignment tab character &.
+l.44 ... = & ~ (k (v - vr) (v - vt) - u + I) / C &
+                                                   \text{(5)}\\ \end{align*}
+? 
+! Undefined control sequence.
+l.44 ... (k (v - vr) (v - vt) - u + I) / C & \text
+                                                  {(5)}\\ \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.44 ...) - u + I) / C & \text{(5)}\\ \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 ...) - u + I) / C & \text{(5)}\\ \end{align*}
+                                                  
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.44 ...) - u + I) / C & \text{(5)}\\ \end{align*}
+                                                  
+? 
+[14] [15] [16] [17] [18]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 \begin{align*}
+                    \frac{dv}{dt} = & ~ a (b (v - vr) - u) & \text{(6)}\\ \e...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.59 \begin{align*} \frac{dv}{dt}
+                                  = & ~ a (b (v - vr) - u) & \text{(6)}\\ \e...
+
+? 
+! Extra }, or forgotten $.
+\frac #1#2->{\begingroup #1\endgroup \over #2}
+                                              
+l.59 \begin{align*} \frac{dv}{dt}
+                                  = & ~ a (b (v - vr) - u) & \text{(6)}\\ \e...
+
+? 
+! Misplaced alignment tab character &.
+l.59 \begin{align*} \frac{dv}{dt} = &
+                                      ~ a (b (v - vr) - u) & \text{(6)}\\ \e...
+
+? 
+! Misplaced alignment tab character &.
+l.59 ...} \frac{dv}{dt} = & ~ a (b (v - vr) - u) &
+                                                   \text{(6)}\\ \end{align*}
+? 
+! Undefined control sequence.
+l.59 ...c{dv}{dt} = & ~ a (b (v - vr) - u) & \text
+                                                  {(6)}\\ \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 ... (v - vr) - u) & \text{(6)}\\ \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.59 ... (v - vr) - u) & \text{(6)}\\ \end{align*}
+                                                  
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.59 ... (v - vr) - u) & \text{(6)}\\ \end{align*}
+                                                  
+? 
+[19] [20] [21]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \begin{align*}
+                    v(v>vpeak) = & ~ c & \text{(7)}\\ u(v>vpeak) = & ~ u + d...
+
+? 
+! Misplaced alignment tab character &.
+l.68 \begin{align*} v(v>vpeak) = &
+                                   ~ c & \text{(7)}\\ u(v>vpeak) = & ~ u + d...
+
+? 
+! Misplaced alignment tab character &.
+l.68 \begin{align*} v(v>vpeak) = & ~ c &
+                                         \text{(7)}\\ u(v>vpeak) = & ~ u + d...
+
+? 
+! Undefined control sequence.
+l.68 \begin{align*} v(v>vpeak) = & ~ c & \text
+                                              {(7)}\\ u(v>vpeak) = & ~ u + d...
+
+? 
+! Misplaced alignment tab character &.
+l.68 ...eak) = & ~ c & \text{(7)}\\ u(v>vpeak) = &
+                                                   ~ u + d & \text{(8)}\end{...
+
+? 
+! Misplaced alignment tab character &.
+l.68 ... c & \text{(7)}\\ u(v>vpeak) = & ~ u + d &
+                                                   \text{(8)}\end{align*}
+? 
+! Undefined control sequence.
+l.68 ...text{(7)}\\ u(v>vpeak) = & ~ u + d & \text
+                                                  {(8)}\end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 ...peak) = & ~ u + d & \text{(8)}\end{align*}
+                                                  
+? 
+[22] [23] [24] [25] [26]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.83 \begin{align*}
+                    i_{dendr} = & G_{down} (v - v_{down}) + \sum \limits_{up...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.83 \begin{align*} i_
+                      {dendr} = & G_{down} (v - v_{down}) + \sum \limits_{up...
+
+? 
+! Misplaced alignment tab character &.
+l.83 \begin{align*} i_{dendr} = &
+                                  G_{down} (v - v_{down}) + \sum \limits_{up...
+
+? 
+! Misplaced alignment tab character &.
+l.83 ... + \sum \limits_{up} G_{up} (v - v_{up}) &
+                                                   \text{(9)} \end{align*}
+? 
+! Undefined control sequence.
+l.83 ...m \limits_{up} G_{up} (v - v_{up}) & \text
+                                                  {(9)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.83 ...up} (v - v_{up}) & \text{(9)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.83 ...up} (v - v_{up}) & \text{(9)} \end{align*}
+                                                  
+? 
+[27] [28] [29] [30] [31] [32]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 \begin{align*}
+                     I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} &...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.101 \begin{align*} I_
+                       {j}^{syn} = & ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} &...
+
+? 
+! Misplaced alignment tab character &.
+l.101 \begin{align*} I_{j}^{syn} = &
+                                     ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} &...
+
+? 
+! Misplaced alignment tab character &.
+l.101 ...& ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} &
+                                                   \text{(5)} \end{align*}
+? 
+! Undefined control sequence.
+l.101 ...um \limits_{i=1}^{N} s_{ij}w_{ij} & \text
+                                                  {(5)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 ...N} s_{ij}w_{ij} & \text{(5)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.101 ...N} s_{ij}w_{ij} & \text{(5)} \end{align*}
+                                                  
+? 
+[33] [34] [35] [36]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 \begin{align*}
+                     I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} &...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.113 \begin{align*} I_
+                       {j}^{syn} = & ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} &...
+
+? 
+! Misplaced alignment tab character &.
+l.113 \begin{align*} I_{j}^{syn} = &
+                                     ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} &...
+
+? 
+! Misplaced alignment tab character &.
+l.113 ...& ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} &
+                                                   \text{(6)} \end{align*}
+? 
+! Undefined control sequence.
+l.113 ...um \limits_{i=1}^{N} i_{ij}w_{ij} & \text
+                                                  {(6)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...N} i_{ij}w_{ij} & \text{(6)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.113 ...N} i_{ij}w_{ij} & \text{(6)} \end{align*}
+                                                  
+? 
+[37] [38] [39] [40] [41]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.128 \begin{align*}
+                     i_{e} = & ~ i_{NMDA} + i_{AMPA} & \text{(7)} \\ i_{i} =...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.128 \begin{align*} i_
+                       {e} = & ~ i_{NMDA} + i_{AMPA} & \text{(7)} \\ i_{i} =...
+
+? 
+! Misplaced alignment tab character &.
+l.128 \begin{align*} i_{e} = &
+                               ~ i_{NMDA} + i_{AMPA} & \text{(7)} \\ i_{i} =...
+
+? 
+! Misplaced alignment tab character &.
+l.128 ...align*} i_{e} = & ~ i_{NMDA} + i_{AMPA} &
+                                                   \text{(7)} \\ i_{i} = & ~...
+
+? 
+! Undefined control sequence.
+l.128 ...} i_{e} = & ~ i_{NMDA} + i_{AMPA} & \text
+                                                  {(7)} \\ i_{i} = & ~ i_{GA...
+
+? 
+! Misplaced alignment tab character &.
+l.128 ...MDA} + i_{AMPA} & \text{(7)} \\ i_{i} = &
+                                                   ~ i_{GABA_{A}} + i_{GABA_...
+
+? 
+! Misplaced alignment tab character &.
+l.128 ...i_{i} = & ~ i_{GABA_{A}} + i_{GABA_{B}} &
+                                                   \text{(8)} \end{align*}
+? 
+! Undefined control sequence.
+l.128 ...= & ~ i_{GABA_{A}} + i_{GABA_{B}} & \text
+                                                  {(8)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.128 ... + i_{GABA_{B}} & \text{(8)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.128 ... + i_{GABA_{B}} & \text{(8)} \end{align*}
+                                                  
+? 
+[42] [43] [44]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 \begin{align*}
+                     i_{AMPA} = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text{(9)} ...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.137 \begin{align*} i_
+                       {AMPA} = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text{(9)} ...
+
+? 
+! Misplaced alignment tab character &.
+l.137 \begin{align*} i_{AMPA} = &
+                                  ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text{(9)} ...
+
+? 
+! Misplaced alignment tab character &.
+l.137 ...{AMPA} = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) &
+                                                   \text{(9)} \\ i_{NMDA} = ...
+
+? 
+! Undefined control sequence.
+l.137 ... = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text
+                                                  {(9)} \\ i_{NMDA} = & ~ g_...
+
+? 
+! Misplaced alignment tab character &.
+l.137 ...rev}_{AMPA}) & \text{(9)} \\ i_{NMDA} = &
+                                                   ~ g_{NMDA}\frac{\Big[\fra...
+
+? 
+! Misplaced alignment tab character &.
+l.137 ...v+80}{60} \Big]^{2}} (v-v^{rev}_{NMDA}) &
+                                                   \text{(10)} \end{align*}
+? 
+! Undefined control sequence.
+l.137 ...60} \Big]^{2}} (v-v^{rev}_{NMDA}) & \text
+                                                  {(10)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 ...^{rev}_{NMDA}) & \text{(10)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.137 ...^{rev}_{NMDA}) & \text{(10)} \end{align*}
+                                                  
+? 
+[45] [46] [47] [48]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.149 \begin{align*}
+                     i_{GABA_{A}} = & ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) &...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.149 \begin{align*} i_
+                       {GABA_{A}} = & ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) &...
+
+? 
+! Misplaced alignment tab character &.
+l.149 \begin{align*} i_{GABA_{A}} = &
+                                      ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) &...
+
+? 
+! Misplaced alignment tab character &.
+l.149 ... & ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) &
+                                                   \text{(11)} \\ i_{GABA_{B...
+
+? 
+! Undefined control sequence.
+l.149 ..._{GABA_{A}}(v-v^{rev}_{GABA_{A}}) & \text
+                                                  {(11)} \\ i_{GABA_{B}} = &...
+
+? 
+! Misplaced alignment tab character &.
+l.149 ...A_{A}}) & \text{(11)} \\ i_{GABA_{B}} = &
+                                                   ~ g_{GABA_{B}}(v-v^{rev}_...
+
+? 
+! Misplaced alignment tab character &.
+l.149 ... & ~ g_{GABA_{B}}(v-v^{rev}_{GABA_{B}}) &
+                                                   \text{(12)} \end{align*}
+? 
+! Undefined control sequence.
+l.149 ..._{GABA_{B}}(v-v^{rev}_{GABA_{B}}) & \text
+                                                  {(12)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.149 ...v}_{GABA_{B}}) & \text{(12)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.149 ...v}_{GABA_{B}}) & \text{(12)} \end{align*}
+                                                  
+? 
+[49]
+
+! LaTeX Error: Environment align* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.152 \begin{align*}
+                     g_{k} = & ~ \sum \limits_{f} e^{t-t_{f}/ \tau} \Theta(t...
+
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.152 \begin{align*} g_
+                       {k} = & ~ \sum \limits_{f} e^{t-t_{f}/ \tau} \Theta(t...
+
+? 
+! Misplaced alignment tab character &.
+l.152 \begin{align*} g_{k} = &
+                               ~ \sum \limits_{f} e^{t-t_{f}/ \tau} \Theta(t...
+
+? 
+! Misplaced alignment tab character &.
+l.152 ...its_{f} e^{t-t_{f}/ \tau} \Theta(t-t_f) &
+                                                   \text{(13)} \end{align*}
+? 
+! Undefined control sequence.
+l.152 ...} e^{t-t_{f}/ \tau} \Theta(t-t_f) & \text
+                                                  {(13)} \end{align*}
+? 
+
+! LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.152 ... \Theta(t-t_f) & \text{(13)} \end{align*}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.152 ... \Theta(t-t_f) & \text{(13)} \end{align*}
+                                                  
+? 
+[50] [51] [52] [53] (./_formulas.aux) ) 
+Here is how much of TeX's memory you used:
+ 554 strings out of 494954
+ 6662 string characters out of 6181004
+ 54872 words of memory out of 5000000
+ 3906 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 32i,7n,21p,239b,100s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on _formulas.dvi (53 pages, 7360 bytes).

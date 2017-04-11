@@ -1,0 +1,53 @@
+\form#0:\begin{align*} \frac{dv}{dt} = & ~ 0.04v^2 + 5v + 140 - u + I & \text{(1)}\\ \frac{du}{dt} = & ~ a (bv - u) & \text{(2)} \end{align*}
+\form#1:$v$
+\form#2:$I$
+\form#3:$I = i_{syn} + I_{ext}$
+\form#4:$u$
+\form#5:$a$
+\form#6:$b$
+\form#7:$t$
+\form#8:$a, b, c, d$
+\form#9:$v_{cutoff}=+30$
+\form#10:\begin{align*} v(v>30) = & ~ c & \text{(3)}\\ u(v>30) = & ~ u + d & \text{(4)}\end{align*}
+\form#11:$a=0.02, b=0.2, c=-65, d=8$
+\form#12:$a=0.1, b=0.2, c=-65, d=2)$
+\form#13:\begin{align*} \frac{dv}{dt} = & ~ (k (v - vr) (v - vt) - u + I) / C & \text{(5)}\\ \end{align*}
+\form#14:$k$
+\form#15:$vr$
+\form#16:$vt$
+\form#17:$C$
+\form#18:\begin{align*} \frac{dv}{dt} = & ~ a (b (v - vr) - u) & \text{(6)}\\ \end{align*}
+\form#19:$C, k, vr, vt, a, b, vpeak, c, d$
+\form#20:$v_{cutoff}=+vpeak$
+\form#21:\begin{align*} v(v>vpeak) = & ~ c & \text{(7)}\\ u(v>vpeak) = & ~ u + d & \text{(8)}\end{align*}
+\form#22:$C=100, k=0.7, vr=-60, vt=-40, a=0.03, b=-2.0, vpeak=35, c=-50, d=100$
+\form#23:$C=20, k=1, vr=-55, vt=-40, a=0.15, b=8, vpeak=25, c=-55, d=200)$
+\form#24:$i_{dendr}$
+\form#25:$I = i_{syn} + i_{dendr} + I_{ext}$
+\form#26:\begin{align*} i_{dendr} = & G_{down} (v - v_{down}) + \sum \limits_{up} G_{up} (v - v_{up}) & \text{(9)} \end{align*}
+\form#27:$G_{up}$
+\form#28:$G_{down}$
+\form#29:$j$
+\form#30:$ I_{j}^{syn} $
+\form#31:$i$
+\form#32:\begin{align*} I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} s_{ij}w_{ij} & \text{(5)} \end{align*}
+\form#33:$s_{ij}$
+\form#34:$w_{ij}$
+\form#35:$I_{ij}$
+\form#36:\begin{align*} I_{j}^{syn} = & ~ \sum \limits_{i=1}^{N} i_{ij}w_{ij} & \text{(6)} \end{align*}
+\form#37:$i,j$
+\form#38:$g$
+\form#39:$i_{e}$
+\form#40:$i_{i}$
+\form#41:\begin{align*} i_{e} = & ~ i_{NMDA} + i_{AMPA} & \text{(7)} \\ i_{i} = & ~ i_{GABA_{A}} + i_{GABA_{B}} & \text{(8)} \end{align*}
+\form#42:$i_{AMPA}$
+\form#43:$i_{NMDA}$
+\form#44:\begin{align*} i_{AMPA} = & ~ g_{AMPA}(v-v^{rev}_{AMPA}) & \text{(9)} \\ i_{NMDA} = & ~ g_{NMDA}\frac{\Big[\frac{v+80}{60} \Big]^{2}}{1+\Big[\frac{v+80}{60} \Big]^{2}} (v-v^{rev}_{NMDA}) & \text{(10)} \end{align*}
+\form#45:$v^{rev}$
+\form#46:$i_{GABA_A}$
+\form#47:$i_{GABA_B}$
+\form#48:\begin{align*} i_{GABA_{A}} = & ~ g_{GABA_{A}}(v-v^{rev}_{GABA_{A}}) & \text{(11)} \\ i_{GABA_{B}} = & ~ g_{GABA_{B}}(v-v^{rev}_{GABA_{B}}) & \text{(12)} \end{align*}
+\form#49:\begin{align*} g_{k} = & ~ \sum \limits_{f} e^{t-t_{f}/ \tau} \Theta(t-t_f) & \text{(13)} \end{align*}
+\form#50:$f$
+\form#51:$t_f$
+\form#52:$ \Theta $

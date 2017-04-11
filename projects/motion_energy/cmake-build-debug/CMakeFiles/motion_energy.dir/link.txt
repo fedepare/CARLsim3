@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/motion_energy.dir/scripts/demoOAT.m.o CMakeFiles/motion_energy.dir/scripts/initOAT.m.o CMakeFiles/motion_energy.dir/main_motion_energy.cpp.o  -o motion_energy 

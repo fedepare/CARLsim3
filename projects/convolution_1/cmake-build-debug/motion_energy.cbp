@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="motion_energy"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="motion_energy">
+				<Option output="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/motion_energy" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 motion_energy"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="motion_energy/fast">
+				<Option output="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/motion_energy" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 motion_energy/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/fedepare/Projects/CARLsim3/projects/motion_energy/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/Makefile">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/main_motion_energy.cpp">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/motion_energy">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/motion_energy.vcxproj">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/results/carlsim.log">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/results/conn_input_output.dat">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/results/sim_hello_world.dat">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/results/spk_input.dat">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/results/spk_output.dat">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/scripts/demoOAT.m">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/scripts/initOAT.m">
+			<Option target="motion_energy"/>
+		</Unit>
+		<Unit filename="/home/fedepare/Projects/CARLsim3/projects/motion_energy/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

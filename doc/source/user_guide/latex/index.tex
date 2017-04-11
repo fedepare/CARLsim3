@@ -1,0 +1,32 @@
+\hypertarget{index_main_carlsim}{}\section{C\+A\+R\+Lsim 3}\label{index_main_carlsim}
+C\+A\+R\+Lsim is an efficient, easy-\/to-\/use, G\+P\+U-\/accelerated library for simulating large-\/scale spiking neural network (S\+NN) models with a high degree of biological detail. C\+A\+R\+Lsim allows execution of networks of Izhikevich spiking neurons with realistic synaptic dynamics on both generic x86 C\+P\+Us and standard off-\/the-\/shelf G\+P\+Us. The simulator provides a Py\+N\+N-\/like programming interface (C/\+C++), which allows for details and parameters to be specified at the synapse, neuron, and network level.
+
+The present release, C\+A\+R\+Lsim 3, builds on the efficiency and scalability of earlier releases (Nageswaran et al., 2009; Richert et al., 2011). The functionality of the simulator has been greatly expanded by the addition of a number of features that enable and simplify the creation, tuning, and simulation of complex networks with spatial structure.
+
+All software is available on the \href{http://www.socsci.uci.edu/~jkrichma/CARLsim/index.html}{\tt {\bfseries C\+A\+RL Website}}.
+
+New features include\+:
+\begin{DoxyItemize}
+\item improved platform compatibility (Linux, Mac OS X, and Windows)
+\item real-\/time and offline data analysis tools (see ch7\+\_\+monitoring and ch9\+\_\+matlab\+\_\+oat)
+\item a more complete S\+T\+DP implementation which includes neuromodulatory mechanisms (see ch5\+\_\+synaptic\+\_\+plasticity)
+\item an automated parameter tuning interface that utilizes evolutionary algorithms to construct functional S\+N\+Ns (see ch10\+\_\+ecj)
+\item a test suite for functional code verification (see ch11\+\_\+regression\+\_\+suite)
+\end{DoxyItemize}
+
+The simulator was first introduced in 2009 (now referred to as C\+A\+R\+Lsim 1), where it demonstrated near real-\/time performance for 100,000 spiking neurons on a single N\+V\+I\+D\+IA G\+TX 280 (Nageswaran et al., 2009). C\+A\+R\+Lsim 2 added basic support for synaptic conductances, spike-\/timing dependent plasticity (S\+T\+DP), and short-\/term plasticity (S\+TP) (Richert et al., 2011). The present release, C\+A\+R\+Lsim 3, greatly expands the functionality of the simulator by adding a number of features that enable and simplify the creation, tuning, and simulation of complex networks with spatial structure.
+
+C\+A\+R\+Lsim was originally written by Jayram Moorkanikara Nageswaran and Micah Richert. The code is now being maintained and extended by Michael Beyeler, Kristofor Carlson, and Ting-\/\+Shuo Chou. For a full list of contributors, see file A\+U\+T\+H\+O\+RS.\hypertarget{index_main_getting_started}{}\section{Getting Started}\label{index_main_getting_started}
+The best place to get started is ch1\+\_\+getting\+\_\+started of the User Guide, which will walk you through the installation procedure. ch2\+\_\+basic\+\_\+concepts will explain the basic concepts of C\+A\+R\+Lsim.
+
+For a more example-\/driven approach, please refer to our Tutorials (e.\+g., tut1\+\_\+basic\+\_\+concepts).\hypertarget{index_main_ref}{}\section{References}\label{index_main_ref}
+For the most up-\/to-\/date information, software packages, and announcements, please refer to the \href{http://www.socsci.uci.edu/~jkrichma/CARLsim/index.html}{\tt {\bfseries C\+A\+RL Website}} or join the \href{https://department-lists.uci.edu/mailman/listinfo/ics-carlsim}{\tt C\+A\+R\+Lsim Release Info} mailing list.
+
+The simulator—along with its various releases, computational studies, and sample code—has previously been published in the following studies\+:
+\begin{DoxyItemize}
+\item Beyeler$\ast$, M., Carlson$\ast$, K.\+D., Chou$\ast$, T.\+S., Dutt, N., and Krichmar, J.\+L. (2014). C\+A\+R\+Lsim 3\+: A user-\/friendly and highly optimized library for the creation of neurobiologically detailed spiking neural networks. I\+E\+EE International Joint Conference on Neural Networks (accepted for publication). ($\ast$co-\/first authors)
+\item Carlson, K.\+D., Nageswaran, J.\+M., Dutt, N., and Krichmar, J.\+L. (2014). An efficient automated parameter tuning framework for spiking neural networks. Frontiers in Neuroscience 8(10). (C\+A\+R\+Lsim v2.\+2)
+\item Beyeler, M., Richert, M., Dutt, N.\+D., and Krichmar, J.\+L. (2014). Efficient spiking neural network model of pattern motion selectivity in visual cortex. Neuroinformatics. (C\+A\+R\+Lsim v2.\+1)
+\item Richert, M., Nageswaran, J.\+M., Dutt, N., and Krichmar, J.\+L. (2011). An efficient simulation environment for modeling large-\/scale cortical processing. Frontiers in Neuroinformatics 5, 1-\/15. (C\+A\+R\+Lsim v2.\+0)
+\item Nageswaran, J.\+M., Dutt, N., Krichmar, J.\+L., Nicolau, A., and Veidenbaum, A.\+V. (2009). A configurable simulation environment for the efficient simulation of large-\/scale spiking neural networks on graphics processors. Neural Networks 22, 791-\/800. (C\+A\+R\+Lsim v1.\+0) 
+\end{DoxyItemize}

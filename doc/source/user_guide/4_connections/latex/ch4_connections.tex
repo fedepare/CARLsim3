@@ -1,0 +1,338 @@
+Once the neuron groups have been defined, the synaptic connections between them can be defined via C\+A\+R\+Lsim\+::connect. C\+A\+R\+Lsim provides a set of primitive connection topologies for building networks as well as a means to specify arbitrary connectivity using a callback mechanism. The following sections will explain this functionality in detail.
+
+For users migrating from C\+A\+R\+Lsim 2.\+2, please note that the signature of the C\+A\+R\+Lsim\+::connect call has changed (see \hyperlink{ch4_connections_ch4s4_migrating_connect}{4.\+4 Migrating from C\+A\+R\+Lsim 2.\+2}).\hypertarget{ch4_connections_ch4s1_primitive_types}{}\section{4.\+1 Primitive Types}\label{ch4_connections_ch4s1_primitive_types}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+C\+A\+R\+Lsim provides a number of pre-\/defined connection types\+: All-\/to-\/all, random, one-\/to-\/one, and Gaussian connectivity. All-\/to-\/all (also known as \char`\"{}full\char`\"{}) connectivity connects all neurons in the pre-\/synaptic group to all neurons in the post-\/synaptic group (with or without self-\/connections). One-\/to-\/one connectivity connects neuron i in the pre-\/synaptic group to neuron i in the post-\/synaptic group (both groups should have the same number of neurons). Random connectivity connects a group of pre-\/synaptic neurons randomly to a group of post-\/synaptic neurons with a user-\/specified probability p. Gaussian connectivity uses topographic information from the \+::\+Grid3D struct to connects neurons based on their relative distance in 3D space.
+
+Pre-\/defined connection types are specified using C\+A\+R\+Lsim\+::connect, which in their complete form look like the following\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(grpIdPre, grpIdPost, type, RangeWeight(0.0f,0.1f,0.2f), 0.5f, RangeDelay(1,10),
+    RadiusRF(3,3,0), SYN\_PLASTIC, 1.5f, 0.5f);
+\end{DoxyCode}
+ Here, a pre-\/synaptic group with ID {\ttfamily grp\+Id\+Pre} is connected to a post-\/synaptic group with ID {\ttfamily grp\+Id\+Post} following a given connection probability of 50\% (0.\+5f) and a specific connection {\ttfamily type}, the latter being a string such as \char`\"{}full\char`\"{}, \char`\"{}one-\/to-\/one\char`\"{}, \char`\"{}random\char`\"{}, etc. The synapse type (either fixed or plastic) can be indicated with the keyword {\ttfamily S\+Y\+N\+\_\+\+F\+I\+X\+ED} or {\ttfamily S\+Y\+N\+\_\+\+P\+L\+A\+S\+T\+IC}. In C\+O\+BA Mode, receptor-\/specific gain factors can be specified for fast (1.\+5f) and slow channels (0.\+5f), which map either to A\+M\+PA and N\+M\+DA for excitatory connections, or G\+A\+B\+Aa and G\+A\+B\+Ab for inhibitory connections (see \hyperlink{ch4_connections_ch4s1s4_receptor_gain}{4.\+1.\+4 Synaptic Receptor-\/\+Specific Gain Factors}).
+
+Also, this method makes use of three different structs that aim to simplify the specification of weight ranges (\+::\+Range\+Weight, explained in \hyperlink{ch4_connections_ch4s1s1_range_weight}{4.\+1.\+1 The Range\+Weight Struct}), delay ranges (\+::\+Range\+Delay, explained in \hyperlink{ch4_connections_ch4s1s2_range_delay}{4.\+1.\+2 The Range\+Delay Struct}), and spatial receptive fields (\+::\+Radius\+RF, explained in \hyperlink{ch4_connections_ch4s1s3_radiusRF}{4.\+1.\+3 The Radius\+RF Struct}).
+
+The simplest C\+A\+R\+Lsim\+::connect call that uses default values for all optional arguments reads as follows\+: 
+\begin{DoxyCode}
+sim.connect(grpIdPre, grpIdPost, type, RangeWeight(wt), prob);
+\end{DoxyCode}
+ This will connect {\ttfamily grp\+Id\+Pre} to {\ttfamily grp\+Id\+Post} with connection type {\ttfamily type} and connection probability {\ttfamily prob}, using fixed synapses, 1ms delay, no spatial receptive fields, and synaptic gain factor 1.\+0f.\hypertarget{ch4_connections_ch4s1s1_range_weight}{}\subsection{4.\+1.\+1 The Range\+Weight Struct}\label{ch4_connections_ch4s1s1_range_weight}
+\+::\+Range\+Weight is a struct that simplifies the specification of the lower bound (\+::\+Range\+Weight.\+min) and upper bound (\+::\+Range\+Weight.\+max) of the weights as well as an initial weight value (\+::\+Range\+Weight.\+init). For fixed synapses (no plasticity) these three values are all the same. In this case, it is sufficient to call the struct with a single value {\ttfamily wt}\+: {\ttfamily Range\+Weight(wt)}. This will set all fields of the struct to value {\ttfamily wt}.
+
+On the other hand, plastic synapses are initialized to \+::\+Range\+Weight.\+init, and can range between \+::\+Range\+Weight.\+min and \+::\+Range\+Weight.\+max.
+
+Note that all specified weights are considered weight {\bfseries magnitudes} and should thus be non-\/negative, even for inhibitory connections.
+
+The following code snippet would fully connect neuron group {\ttfamily grp\+Id\+Pre} to {\ttfamily grp\+Id\+Post} with plastic synapses in the range 0.\+0f and 0.\+2f, initialized to 0.\+1f, connection probability 1 (100\%), with no particular spatial receptive field, and 1ms synaptic delay\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(grpIdPre, grpIdPost, \textcolor{stringliteral}{"full"}, RangeWeight(0.0f,0.1f,0.2f), 1.0f, RangeDelay(1),
+    RadiusRF(-1), SYN\_PLASTIC);
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+All specified weight values should be non-\/negative (equivalent to weight {\bfseries magnitudes}), even for inhibitory connections. 
+
+The lower bound for weight values (\+::\+Range\+Weight.\+min) must be zero. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{ch4_connections_ch4s4_migrating_connect}{4.\+4 Migrating from C\+A\+R\+Lsim 2.\+2} 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch4_connections_ch4s1s2_range_delay}{}\subsection{4.\+1.\+2 The Range\+Delay Struct}\label{ch4_connections_ch4s1s2_range_delay}
+Similar to \+::\+Range\+Weight, \+::\+Range\+Delay is a struct to specify the lower bound (\+::\+Range\+Delay.\+min) and upper bound (\+::\+Range\+Delay.\+max) of a synaptic delay range. Synaptic delays are measured in milliseconds, and can only take integer values.
+
+The following code snippet would fully connect neuron group {\ttfamily grp\+Id\+Pre} to {\ttfamily grp\+Id\+Post} with fixed synapses (weight is 0.\+25f), connection probability 1 (100\%), no particular spatial receptive field, and synaptic delays that are uniformly distributed between 1ms and 20ms\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(grpIdPre, grpIdPost, \textcolor{stringliteral}{"full"}, RangeWeight(0.25f), 1.0f, RangeDelay(1,20),
+    RadiusRF(-1), SYN\_FIXED);
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Delays have to be in the range \mbox{[}1ms, 20ms\mbox{]}. 
+\end{DoxyNote}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch4_connections_ch4s1s3_radiusRF}{}\subsection{4.\+1.\+3 The Radius\+R\+F Struct}\label{ch4_connections_ch4s1s3_radiusRF}
+Each connection type can make use of an optional \+::\+Radius\+RF struct to specify circular receptive fields (R\+Fs) in 1D, 2D, or 3D, following the topographic organization of the \+::\+Grid3D struct (see ch3s3s2\+\_\+topography). This allows for the creation of networks with complex spatial structure.
+
+Spatial R\+Fs are always specified from the point of view of a post-\/synaptic neuron at location (post.\+x,post.\+y,post.\+z), looking back on all the pre-\/synaptic neurons at location (pre.\+x,pre.\+y,pre.\+z) it is connected to.
+
+Using the \+::\+Grid3D struct, neurons in a group can be arranged into a (up to) three-\/dimensional (primitive cubic) grid with side length 1 (arbitrary units). Each neuron in the group gets assigned a (x,y,z) location on a 3D grid centered around the origin, so that calling Grid3\+D(\+Nx,\+Ny,\+Nz) creates coordinates that fall in the range \mbox{[}-\/(Nx-\/1)/2, (Nx-\/1)/2\mbox{]}, \mbox{[}-\/(Ny-\/1)/2, (Ny-\/1)/2\mbox{]}, and \mbox{[}-\/(Nz-\/1)/2, (Nz-\/1)/2\mbox{]}. For more information on the \+::\+Grid3D struct, please refer to ch3s3s2\+\_\+topography.
+
+The \+::\+Radius\+RF struct follows the spatial arrangement (and arbitrary units) established by \+::\+Grid3D. The struct takes up to three arguments, which specify the radius of a circular receptive field in x, y, and z. If the radius in one dimension is 0, say \+::\+Radius\+R\+F.\+radX==0, then pre.\+x must be equal to post.\+x in order to be connected. If the radius in one dimension is -\/1, say \+::\+Radius\+R\+F.\+radX==-\/1, then pre and post will be connected no matter their specific pre.\+x and post.\+x Otherwise, if the radius in one dimension is a positive real number, the RF radius will be exactly that number.
+
+Examples\+:
+\begin{DoxyItemize}
+\item Create a 2D Gaussian RF of radius 10 in z-\/plane\+: Radius\+R\+F(10, 10, 0) Neuron pre will be connected to neuron post iff (pre.\+x-\/post.\+x)$^\wedge$2 + (pre.\+y-\/post.\+y)$^\wedge$2 $<$= 100 and pre.\+z==post.\+z.
+\item Create a 2D heterogeneous Gaussian RF (an ellipse) with semi-\/axes 10 and 5\+: Radius\+R\+F(10, 5, 0) Neuron pre will be connected to neuron post iff (pre.\+x-\/post.\+x)/100 + (pre.\+y-\/post.\+y)$^\wedge$2/25 $<$= 1 and pre.\+z==post.\+z.
+\item Connect all, no matter the RF (default)\+: Radius\+RF(-\/1, -\/1, -\/1)
+\item Connect one-\/to-\/one\+: Radius\+R\+F(0, 0, 0) Neuron pre will be connected to neuron post iff pre.\+x==post.\+x, pre.\+y==post.\+y, pre.\+z==post.\+z. Note\+: Use C\+A\+R\+Lsim\+::connect with type \char`\"{}one-\/to-\/one\char`\"{} instead.
+\end{DoxyItemize}
+
+ \begin{DoxySeeAlso}{See also}
+ch3s3s2\+\_\+topography 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch4_connections_ch4s1s4_receptor_gain}{}\subsection{4.\+1.\+4 Synaptic Receptor-\/\+Specific Gain Factors}\label{ch4_connections_ch4s1s4_receptor_gain}
+In C\+O\+BA Mode (see ch3s2s2\+\_\+coba), synaptic receptor-\/specific gain factors can be specified to vary the A\+M\+P\+A-\/\+N\+M\+DA and G\+A\+B\+Aa-\/\+G\+A\+B\+Ab ratios.
+
+The C\+A\+R\+Lsim\+::connect method takes two additional parameters at the very end, which indicate a multiplicative gain factor for fast and slow synaptic channels. The following code snippet would fully connect neuron group {\ttfamily grp\+Id\+Pre} to {\ttfamily grp\+Id\+Post} with fixed synapses (weight is 0.\+25f, all delays are 1ms) and gain factor 1.\+5f for fast and 0.\+5f for slow synaptic channels\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(grpIdPre, grpIdPost, \textcolor{stringliteral}{"full"}, RangeWeight(0.25f), 1.0f, RangeDelay(1),
+    RadiusRF(-1), SYN\_FIXED, 1.5f, 0.5f);
+\end{DoxyCode}
+
+
+If the post-\/synaptic neuron is of type \+::\+E\+X\+C\+I\+T\+A\+T\+O\+R\+Y\+\_\+\+N\+E\+U\+R\+ON (\+::\+I\+N\+H\+I\+B\+I\+T\+O\+R\+Y\+\_\+\+N\+E\+U\+R\+ON), then the fast channel will refer to A\+M\+PA (G\+A\+B\+Aa) and the slow channel will refer to N\+M\+DA (G\+A\+B\+Ab).
+
+\begin{DoxyNote}{Note}
+The default gain factors (if not specified) are 1.\+0f for both fast and slow channels. 
+\end{DoxyNote}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch4_connections_ch4s1s5_full}{}\subsection{4.\+1.\+5 All-\/to-\/\+All Connectivity}\label{ch4_connections_ch4s1s5_full}
+All-\/to-\/all (also known as \char`\"{}full\char`\"{}) connectivity connects all neurons in the pre-\/synaptic group to all neurons in the post-\/synaptic group (with or without self-\/connections).
+
+The easiest way to achieve all-\/to-\/all connectivity with a fixed weight (e.\+g., 0.\+25f), a fixed connection probability (e.\+g., 0.\+1f or 10\%), and 1ms synaptic delay is via the following C\+A\+R\+Lsim\+::connect command\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(gIn, gOut, \textcolor{stringliteral}{"full"}, RangeWeight(0.25f), 0.1f);
+\end{DoxyCode}
+ Here, {\ttfamily g\+In} and {\ttfamily g\+Out} are group I\+Ds returned from a call to C\+A\+R\+Lsim\+::create\+Spike\+Generator\+Group or C\+A\+R\+Lsim\+::create\+Group (see ch3s3\+\_\+groups). The keyword \char`\"{}full\char`\"{} indicates all-\/to-\/all connectivity. \+::\+Range\+Weight is a struct that simplifies the specification of minimum, initial, and maximum weight values. The last parameter, {\ttfamily 0.\+1f}, sets the connection probability to 10\%. All other parameters (such as synaptic delays, receptive field structure, and synapse type) are optional---thus by omitting them default values are used. The function returns a connection ID, {\ttfamily c\+Id}, which can be used to reference the connection in subsequent calls; for example, when setting up a Connection\+Monitor (see ch7s2\+\_\+connection\+\_\+monitor).
+
+Alternatively, one can use the \char`\"{}full-\/no-\/direct\char`\"{} keyword to indicate that no self-\/connections shall be made\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(gIn, gOut, \textcolor{stringliteral}{"full-no-direct"}, RangeWeight(0.25f), 0.1f);
+\end{DoxyCode}
+ This will prevent neuron {\ttfamily i} in the pre-\/synaptic group to be connected to neuron {\ttfamily i} in the post-\/synaptic group.\hypertarget{ch4_connections_ch4s1s6_random}{}\subsection{4.\+1.\+6 Random Connectivity}\label{ch4_connections_ch4s1s6_random}
+Random connectivity connects a group of pre-\/synaptic neurons randomly to a group of post-\/synaptic neurons with a user-\/specified probability p.
+
+The easiest way to achieve uniform random connectivity with a fixed weight (e.\+g., 0.\+25f), a fixed connection probability (e.\+g., 0.\+1f or 10\%), and 1ms synaptic delay is via the following C\+A\+R\+Lsim\+::connect command\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(gIn, gOut, \textcolor{stringliteral}{"random"}, RangeWeight(0.25f), 0.1f);
+\end{DoxyCode}
+ Here, {\ttfamily g\+In} and {\ttfamily g\+Out} are group I\+Ds returned from a call to C\+A\+R\+Lsim\+::create\+Spike\+Generator\+Group or C\+A\+R\+Lsim\+::create\+Group (see ch3s3\+\_\+groups). The keyword \char`\"{}random\char`\"{} indicates uniform random connectivity. \+::\+Range\+Weight is a struct that simplifies the specification of minimum, initial, and maximum weight values. The last parameter, {\ttfamily 0.\+1f}, sets the connection probability to 10\%. All other parameters (such as synaptic delays, receptive field structure, and synapse type) are optional---thus by omitting them default values are used. The function returns a connection ID, {\ttfamily c\+Id}, which can be used to reference the connection in subsequent calls; for example, when setting up a Connection\+Monitor (see ch7s2\+\_\+connection\+\_\+monitor).\hypertarget{ch4_connections_ch4s1s7_1to1}{}\subsection{4.\+1.\+7 One-\/to-\/\+One Connectivity}\label{ch4_connections_ch4s1s7_1to1}
+One-\/to-\/one connectivity connects neuron i in the pre-\/synaptic group to neuron i in the post-\/synaptic group (both groups should have the same number of neurons).
+
+The easiest way to achieve one-\/to-\/one connectivity with a fixed weight (e.\+g., 0.\+25f), connection probability 1 (100\%), and 1ms synaptic delay is via the following C\+A\+R\+Lsim\+::connect command\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} ind cId = sim.connect(gIn, gOut, \textcolor{stringliteral}{"one-to-one"}, RangeWeight(0.25f), 1.0f);
+\end{DoxyCode}
+ Here, {\ttfamily g\+In} and {\ttfamily g\+Out} are group I\+Ds returned from a call to C\+A\+R\+Lsim\+::create\+Spike\+Generator\+Group or C\+A\+R\+Lsim\+::create\+Group (see ch3s3\+\_\+groups). The keyword \char`\"{}one-\/to-\/one\char`\"{} indicates one-\/to-\/one connectivity. \+::\+Range\+Weight is a struct that simplifies the specification of minimum, initial, and maximum weight values. The last parameter, {\ttfamily 1.\+0f}, sets the connection probability to 100\%. All other parameters (such as synaptic delays, receptive field structure, and synapse type) are optional---thus by omitting them default values are used. The function returns a connection ID, {\ttfamily c\+Id}, which can be used to reference the connection in subsequent calls; for example, when setting up a Connection\+Monitor (see ch7s2\+\_\+connection\+\_\+monitor).
+
+\begin{DoxyNote}{Note}
+In order to achieve topographic one-\/to-\/one connectivity (i.\+e., connect two neurons only if they code for the same spatial location), use Gaussian connectivity with Radius\+R\+F(0,0,0).
+\end{DoxyNote}
+\hypertarget{ch4_connections_ch4s1s8_gaussian}{}\subsection{4.\+1.\+8 Gaussian Connectivity}\label{ch4_connections_ch4s1s8_gaussian}
+Gaussian connectivity uses topographic information from the \+::\+Grid3D struct to connect neurons based on their relative distance in 3D space. The extent of the Gaussian neighborhood is specified via the \+::\+Radius\+RF struct, which accepts three parameters to specify a receptive field radius in dimensions x, y, and z. This makes it possible to create 1D, 2D, or 3D circular receptive fields.
+
+The easiest way to achieve 2D Gaussian connectivity with radius 10 (arbitrary units) in x and y, where synaptic weights are fixed and decrease with distance, connection probability is 1 (100\%), and synaptic delays are 1ms, is via the following C\+A\+R\+Lsim\+::connect command\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connect(gIn, gOut, \textcolor{stringliteral}{"gaussian"}, RangeWeight(0.25f), 1.0f, RangeDelay(1), RadiusRF(10,10,
+      0), SYN\_FIXED);
+\end{DoxyCode}
+ Here, {\ttfamily g\+In} and {\ttfamily g\+Out} are group I\+Ds returned from a call to C\+A\+R\+Lsim\+::create\+Spike\+Generator\+Group or C\+A\+R\+Lsim\+::create\+Group (see ch3s3\+\_\+groups). The keyword \char`\"{}gaussian\char`\"{} indicates Gaussian connectivity. \+::\+Range\+Weight is a struct that simplifies the specification of minimum, initial, and maximum weight values; and in this case it specifies the maximum weight value, which is achieved when both pre-\/synaptic and post-\/synaptic neuron code for the same spatial location. The next parameter, {\ttfamily 1.\+0f}, sets the connection probability to 100\%. Radius\+R\+F(10,10,0) specifies that a 2D receptive fields in x and y shall be created with radius 10 (see example below). Setting radius in z to 0 forces neurons to have the exact same z-\/coordinate in order to be connected. The function returns a connection ID, {\ttfamily c\+Id}, which can be used to reference the connection in subsequent calls; for example, when setting up a Connection\+Monitor (see ch7s2\+\_\+connection\+\_\+monitor).
+
+A few things should be noted about the implementation. Usually, one specifies the Gaussian width or standard deviation of the normal distribution (i.\+e., the parameter $\sigma$). Here, in order to standardize C\+A\+R\+Lsim\+::connect calls across connection types, the Gaussian width is instead inferred from the \+::\+Radius\+RF structs, such that neurons at the very border of the receptive field are connected with a weight that is 10\% of the maximum specified weight. Within the receptive field weights drop with distance squared, as is the case with a regular normal distribution. Note that units for distance are arbitrary, in that they are not tied to any physical unit of space. Instead, units are tied to the \+::\+Grid3D struct, which places consecutive neurons 1 arbitrary unit apart.
+
+{\bfseries Example\+:} Consider a 2D receptive field Radius\+R\+F(a,b,0). Here, two neurons \char`\"{}pre\char`\"{} and \char`\"{}post\char`\"{}, coding for spatial locations (pre.\+x,pre.\+y,pre.\+z) and (post.\+x,post.\+y,post.\+z), will be connected iff $ (pre.x-post.x)^2/a^2 + (pre.y-post.y)/b^2 <= 1 $ (which is the ellipse inequality) and $pre.z==post.z$. The weight will be maximal (i.\+e., {\ttfamily Range\+Weight.\+max}) if \char`\"{}pre\char`\"{} and \char`\"{}post\char`\"{} code for the same (x,y) location. Within the receptive field, the weights drop with distance squared, so that neurons for which $ (pre.x-post.x)^2/a^2 + (pre.y-post.y)/b^2 == 1$ (exactly equal to 1) are connected with {\ttfamily 0.\+1$\ast$\+Range\+Weight.max}. Outside the receptive field, weights are zero.
+
+Another case to consider is where the presynaptic and postsynaptic group have different \+::\+Grid3D structs (or consist of different numbers of neurons). In order to cover the full space that these groups cover, the coordinate of the presynaptic group will be scaled to the dimensions of the postsynaptic group\+: $ pre.x = pre.x / gridPre.x * gridPost.x $, $ pre.y = pre.y / gridPre.y * gridPost.y $, and $ pre.z = pre.z / gridPre.z * gridPost.z $.
+
+The following figures shows some of examples of a 2D Gaussian receptive field created with Radius\+R\+F(9,9,0). Each panel shows the receptive field of a particular post-\/synaptic neuron (coding for different spatial locations) looking back at its pre-\/synaptic connections. The figure was generated with an O\+AT Connection Monitor (see ch9\+\_\+matlab\+\_\+oat).
+
+ By making use of the flexibility that is provided by the \+::\+Radius\+RF struct, it is possible to create any 1D, 2D, or 3D Gaussian receptive field. A few examples that are easy to visualize are shown in the figure below. The first panel is essentially a one-\/to-\/one connection by using Radius\+R\+F(0,0,0). But, assume you would want to connect neurons only if their (x,y) location is the same, but did not care about their z-\/coordinates. This could simply be achieved by using Radius\+RF(0,0,-\/1). Similary, it is possible to permute the x, y, and z dimensions in the logic. You could connect neurons according to distance in y, only if their z-\/coordinate was the same, no matter the x-\/coordinate\+: Radius\+RF(-\/1,y,0). Or, you could connect neurons in a 3D ellipsoid\+: Radius\+R\+F(a,b,c).
+
+ \begin{DoxyNote}{Note}
+\+::\+Radius\+RF and \+::\+Grid3D use the same but arbitrary units, where neurons are placed on a (primitive cubic) grid with cubic side length 1, so that consecutive neurons on the grid are placed 1 arbitrary unit apart. 
+
+Any 1D, 2D, or 3D Gaussian receptive field is possible. However, visualization is currently limited to 2D planes. 
+\end{DoxyNote}
+\begin{DoxyAttention}{Attention}
+Since the Gaussian width is inferred from receptive field dimensions, using \char`\"{}gaussian\char`\"{} connectivity in combination with Radius\+RF(-\/1,-\/1,-\/1) is not allowed.
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+ch3s3s2\+\_\+topography 
+
+\hyperlink{ch4_connections_ch4s1s3_radiusRF}{4.\+1.\+3 The Radius\+RF Struct} 
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+v3.\+0
+\end{DoxySince}
+\hypertarget{ch4_connections_ch4s1s9_compconn}{}\subsection{4.\+1.\+9 Compartmental Connections}\label{ch4_connections_ch4s1s9_compconn}
+\begin{DoxyAuthor}{Author}
+Stanislav Listopad 
+
+Michael Beyeler
+\end{DoxyAuthor}
+Multi-\/compartment neurons can be connected with C\+A\+R\+Lsim\+::connect\+Compartments. This creates a \char`\"{}one-\/to-\/one\char`\"{} connection between two compartmentally enabled groups {\ttfamily grp\+Id\+Lower} and {\ttfamily grp\+Id\+Upper}\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{short} \textcolor{keywordtype}{int} cId = sim.connectCompartments(grpIdLower, grpIdUpper);
+\end{DoxyCode}
+
+
+The order of the group I\+Ds in this function call is crucial, as it will define the topography of the network\+: A compartment can have a {\itshape down} (\char`\"{}mother\char`\"{}) and several {\itshape up} (\char`\"{}daughter\char`\"{}) compartments, as shown in the following figure\+:
+
+ The network spans four groups ({\ttfamily grp\+Soma}, {\ttfamily grp\+Dend0}, {\ttfamily grp\+Dend1}, and {\ttfamily grp\+Dend2}) of five neurons each. Each neuron in the network (labeled 0-\/19) is considered a compartment, with all neurons in a group belonging to the same type of compartment (e.\+g., somatic compartment, {\ttfamily grp\+Soma}). All the n-\/th neurons in a group together form one multi-\/compartment neuron (e.\+g., neuron 0, 5, 10, and 15).
+
+According to (9) in ch3s1s3\+\_\+compartments, the dendritic current of neuron 10, $i_{10}$, is thus given as\+:
+
+\begin{align*} i_{10} = & G_0^{down} (v_{10} - v_{0}) + G_5^{down} (v_{10} - v_{5}) + G_{15}^{up} (v_{10} - v_{15}), & \text{(1)} \end{align*}
+
+where $v_n$ is the membrane potential of the n-\/th neuron, $G_n^{down}$ is the coupling constant that applies to all {\itshape downward} connections of the n-\/th neuron, and $G_n^{up}$ is the coupling constant that applies to all {\itshape downward} connections of the n-\/th neuron. The coupling constants are set via C\+A\+R\+Lsim\+::set\+Compartment\+Parameters.
+
+A group can have at most 4 compartmental neighbors.
+
+The following code configures a network to create the network topography for the figure above\+:
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// ---------------- CONFIG STATE -------------------}
+CARLsim sim(\textcolor{stringliteral}{"compartments"}, GPU\_MODE, USER);
+
+\textcolor{comment}{// create neuron groups}
+\textcolor{keywordtype}{int} grpSoma = sim.createGroup(\textcolor{stringliteral}{"soma"}, 5, EXCITATORY\_NEURON);
+\textcolor{keywordtype}{int} grpDend0 = sim.createGroup(\textcolor{stringliteral}{"dendrite0"}, 5, EXCITATORY\_NEURON);
+\textcolor{keywordtype}{int} grpDend1 = sim.createGroup(\textcolor{stringliteral}{"dendrite1"}, 5, EXCITATORY\_NEURON);
+\textcolor{keywordtype}{int} grpDend2 = sim.createGroup(\textcolor{stringliteral}{"dendrite2"}, 5, EXCITATORY\_NEURON);
+
+\textcolor{comment}{// set (arbitrary) values for 9-param Izhikevich model}
+sim.setNeuronParameters(grpSoma, 550.0f, 2.0f, -60.0f, -50.0f, 0.002f, -0.4f, 25.0f, -52.2f, 109.0f);
+sim.setNeuronParameters(grpDend0, 550.0f, 2.0f, -60.0f, -50.0f, 0.002f, -0.4f, 25.0f, -52.2f, 109.0f);
+sim.setNeuronParameters(grpDend1, 550.0f, 2.0f, -60.0f, -50.0f, 0.002f, -0.4f, 25.0f, -52.2f, 109.0f);
+sim.setNeuronParameters(grpDend2, 550.0f, 2.0f, -60.0f, -50.0f, 0.002f, -0.4f, 25.0f, -52.2f, 109.0f);
+
+\textcolor{comment}{// set (arbitrary) values for up and down coupling}
+sim.setCompartmentParameters(grpSoma, 100.0f, 5.0f); \textcolor{comment}{// up, down}
+sim.setCompartmentParameters(grpDend0, 100.0f, 5.0f); \textcolor{comment}{// up, down}
+sim.setCompartmentParameters(grpDend1, 100.0f, 5.0f); \textcolor{comment}{// up, down}
+sim.setCompartmentParameters(grpDend2, 100.0f, 5.0f); \textcolor{comment}{// up, down}
+
+\textcolor{comment}{// create topography}
+sim.connectCompartments(grpSoma, grpDend0);
+sim.connectCompartments(grpDend0, grpDend1);
+sim.connectCompartments(grpDend0, grpDend2);
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+A compartmental connection is basically a gap junction (see (9) in ch3s1s3\+\_\+compartments). 
+
+Make sure to call C\+A\+R\+Lsim\+::set\+Compartment\+Parameters on a compartmentally connected group. 
+
+The maximum number of allowed compartmental connections per neuron is controlled by the parameter \+::\+M\+A\+X\+\_\+\+N\+U\+M\+\_\+\+C\+O\+M\+P\+\_\+\+C\+O\+NN in carlsim\+\_\+definitions.\+h. 
+\end{DoxyNote}
+\begin{DoxyAttention}{Attention}
+Two compartmentally connected groups must have the same size. 
+\end{DoxyAttention}
+\begin{DoxySince}{Since}
+v3.\+1
+\end{DoxySince}
+\hypertarget{ch4_connections_ch4s2_library_tools}{}\section{4.\+2. Library Tools}\label{ch4_connections_ch4s2_library_tools}
+A library of useful Connection\+Generator subclasses will be added in a future release.\hypertarget{ch4_connections_ch4s3_user_defined}{}\section{4.\+3 User-\/\+Defined Connections}\label{ch4_connections_ch4s3_user_defined}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+The pre-\/defined topologies described above are useful for many simulations, but are insufficient for constructing networks with arbitrary connectivity. Thus, if one is not satisfied with the built-\/in connection types, a callback mechanism is available for user-\/specified connectivity.
+
+In the callback mechanism, the simulator calls a method on a user-\/defined class in order to determine whether a synaptic connection should be made or not. The user simply needs to define a method that specifies whether a connection should be made between a pre-\/synaptic neuron and a post-\/synaptic neuron and the simulator will automatically call the method for all possible pre-\/ and post-\/synaptic pairs. The user can then specify the connection\textquotesingle{}s delay, initial weight, maximum weight, and whether or not it is plastic.
+
+To make a user-\/defined connection, the user starts by making a new class that derives from the Connection\+Generator class. Inside this new class, the user defines a connect method.
+
+The following code snippet shows a simple example that creates a one-\/to-\/one connection with 10\% connection probability\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// FILE: main.cpp}
+
+\textcolor{preprocessor}{#include <stdlib.h>}     \textcolor{comment}{// srand, rand}
+
+\textcolor{comment}{// custom ConnectionGenerator}
+\textcolor{keyword}{class }MyConnection : \textcolor{keyword}{public} ConnectionGenerator \{
+    MyConnection() \{\}
+    ~MyConnection() \{\}
+
+    \textcolor{comment}{// the pure virtual function inherited from base class}
+    \textcolor{comment}{// note that weight, maxWt, delay, and connected are passed by reference}
+    \textcolor{keywordtype}{void} connect(CARLsim* sim, \textcolor{keywordtype}{int} srcGrp, \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} destGrp, \textcolor{keywordtype}{int} j, \textcolor{keywordtype}{float}& weight, \textcolor{keywordtype}{float}& maxWt,
+            \textcolor{keywordtype}{float}& delay, \textcolor{keywordtype}{bool}& connected)) \{
+        \textcolor{comment}{// connect n-th neuron in pre to n-th neuron in post (with 10% prob)}
+        connected = (i==j) && (rand()/RAND\_MAX < 0.1f);
+        weight = 1.0f;
+        maxWt = 1.0f;
+        delay = 1;
+    \}
+\}
+
+\textcolor{keywordtype}{int} main() \{
+    \textcolor{comment}{// initialize random seed}
+    srand (time(NULL));
+
+    \textcolor{comment}{// config some network}
+    CARLsim sim(\textcolor{stringliteral}{"example"}, CPU\_MODE, USER);
+    \textcolor{keywordtype}{int} g0 = sim.createGroup(\textcolor{stringliteral}{"g0"}, 10, EXCITATORY\_NEURON);
+    \textcolor{keywordtype}{int} g1 = sim.createGroup(\textcolor{stringliteral}{"g1"}, 10, EXCITATORY\_NEURON);
+    \textcolor{comment}{// ... etc. ...}
+
+    \textcolor{comment}{// create an instance of MyConnection class and pass it to CARLsim::connect}
+    MyConnection myConn;
+    sim.connect(g0, g1, myConn, SYN\_PLASTIC);
+
+    sim.setupNetwork();
+    \textcolor{comment}{// etc.}
+\}
+\end{DoxyCode}
+
+
+Note that within Connection\+Generator\+::connect it is possible to access any public methods of the C\+A\+R\+Lsim class. This makes it possible to, for example, create a custom connection function that takes into account the relative position of neurons (using C\+A\+R\+Lsim\+::get\+Neuron\+Location3D). The following code snippet slightly adjusts the above code snippet to produce topographic one-\/to-\/one connectivity; that is, neurons are only connected if their 3D coordinates are exactly the same. 
+\begin{DoxyCode}
+\textcolor{comment}{// custom ConnectionGenerator}
+\textcolor{keyword}{class }MyConnection : \textcolor{keyword}{public} ConnectionGenerator \{
+
+\textcolor{comment}{// ...}
+
+    \textcolor{comment}{// }
+    \textcolor{keywordtype}{void} connect(CARLsim* sim, \textcolor{keywordtype}{int} srcGrp, \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} destGrp, \textcolor{keywordtype}{int} j, \textcolor{keywordtype}{float}& weight, \textcolor{keywordtype}{float}& maxWt,
+            \textcolor{keywordtype}{float}& delay, \textcolor{keywordtype}{bool}& connected)) \{
+        Point3D pre = sim->getNeuronLocation3D(srcGrp, i);
+        Point3D post = sim->getNeuronLocation3D(destGrp, j);
+
+        \textcolor{comment}{// connect only if pre and post coordinates are identical (with 10% prob)}
+        connected = (pre == post) && (rand()/RAND\_MAX < 0.1f);
+        weight = 1.0f;
+        maxWt = 1.0f;
+        delay = 1;
+    \}
+\}
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+All weight values should be non-\/negative (equivalent to weight {\bfseries magnitudes}), even for inhibitory connections. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+C\+A\+R\+Lsim\+::connect(int, int, Connection\+Generator$\ast$, bool, int, int) 
+
+C\+A\+R\+Lsim\+::connect(int, int, Connection\+Generator$\ast$, float, float, bool, int, int)
+\end{DoxySeeAlso}
+\hypertarget{ch4_connections_ch4s4_migrating_connect}{}\section{4.\+4 Migrating from C\+A\+R\+Lsim 2.\+2}\label{ch4_connections_ch4s4_migrating_connect}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+Please note that the signature of the C\+A\+R\+Lsim\+::connect call has changed since C\+A\+R\+Lsim 2.\+2 in order to avoid confusion concerning the large number of (float) input arguments.
+\begin{DoxyItemize}
+\item Inhibitory synaptic weights are no longer specified with a negative sign. Instead, the \+::\+Range\+Weight struct accepts non-\/negative weight {\bfseries magnitudes}. The same applies to user-\/defined connections. Connections with minimum weight {\ttfamily min\+Wt}, initial weight {\ttfamily init\+Wt}, and maximum weight {\ttfamily max\+Wt} in 2.\+2 translate to {\ttfamily Range\+Weight(fabs(min\+Wt),fabs(init\+Wt),fabs(max\+Wt))} in 3.\+0, where {\ttfamily fabs} returns the absolute value of a {\ttfamily float}, and {\ttfamily min\+Wt} must always be zero (for now).
+\item Delays are no longer specified as two {\ttfamily uint8\+\_\+t} variables. Instead, the \+::\+Range\+Delay struct accepts a lower and upper bound for the delay range. Connections with minimum delay {\ttfamily min\+Delay} and maximum delay {\ttfamily max\+Delay} in 2.\+2 translate to {\ttfamily Range\+Delay(min\+Delay,max\+Delay)} in 3.\+0.
+\item The optional input argument {\ttfamily const string\& wt\+Type} is no longer supported.
+\item In addition, 3.\+0 now provides means to specify spatial receptive fields (see \hyperlink{ch4_connections_ch4s1s3_radiusRF}{4.\+1.\+3 The Radius\+RF Struct}) and receptor-\/specific synaptic gain factors (see \hyperlink{ch4_connections_ch4s1s4_receptor_gain}{4.\+1.\+4 Synaptic Receptor-\/\+Specific Gain Factors}). 
+\end{DoxyItemize}

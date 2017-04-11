@@ -1,0 +1,62 @@
+\hypertarget{ch2_basic_concepts_ch2s1_general_workflow}{}\section{2.\+1 General Workflow}\label{ch2_basic_concepts_ch2s1_general_workflow}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+The workflow of a typical C\+A\+R\+Lsim 3 simulation is organized into three distinct, consecutive states (see figure below)\+: the configuration state, the set up state, and the run state.
+
+User functions in the C++ A\+PI are grouped according to these stages, which streamline the process and prevent race conditions. State transitions are handled by special user functions such as C\+A\+R\+Lsim\+::setup\+Network and C\+A\+R\+Lsim\+::run\+Network.
+
+ The first step in using C\+A\+R\+Lsim 3 ({\ttfamily lib\+C\+A\+R\+Lsim}) imports the library and instantiates the main simulation object\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <carlsim.h>}
+CARLsim sim(\textcolor{stringliteral}{"example"}, GPU\_MODE, USER);
+\end{DoxyCode}
+ This prepares the simulation for execution in either \+::\+C\+P\+U\+\_\+\+M\+O\+DE or \+::\+G\+P\+U\+\_\+\+M\+O\+DE, and specifies the verbosity of the status reporting mechanism (\+::\+U\+S\+ER indicating the default logger mode that will print info and error messages to console and save debug messages in a text file). Other logger modes are available that print only error messages (\+::\+S\+H\+O\+W\+T\+I\+ME), suppress console output alltogether (\+::\+S\+I\+L\+E\+NT), or allow to set custom file pointers for each message type (\+::\+C\+U\+S\+T\+OM).
+
+The ability to run a network either on standard x86 C\+P\+Us (\+::\+C\+P\+U\+\_\+\+M\+O\+DE) or off-\/the-\/shelf N\+V\+I\+D\+IA G\+P\+Us (\+::\+G\+P\+U\+\_\+\+M\+O\+DE) allow the user to exploit the advantages of both architectures. Whereas the C\+PU is more efficient for relatively small networks, the G\+PU is most advantageous fo rnetwork sizes of 10,000 neurons and up. In this regime, G\+PU mode should significantly outperform C\+PU mode (with roughly a factor of 20). On the other hand, C\+PU mode allows for execution of extremely large networks that would not fit within the G\+PU\textquotesingle{}s memory.
+
+In addition, the user may want to specify on which C\+U\+DA device to run the simulation. For this, the C\+A\+R\+Lsim constructor allows specification of a \char`\"{}device index\char`\"{} ({\ttfamily ith\+G\+PU}, which can be used in multi-\/\+G\+PU systems to specify on which C\+U\+DA device to establish context. For example, in order to run a network on the third G\+PU in the system ({\ttfamily ith\+G\+PU=2}, 0-\/indexed) and use random seed 42, the constructor should be called as follows\+: 
+\begin{DoxyCode}
+CARLsim sim(\textcolor{stringliteral}{"example"}, GPU\_MODE, USER, 2, 42);
+\end{DoxyCode}
+
+
+From then on, the simulation is in \+::\+C\+O\+N\+F\+I\+G\+\_\+\+S\+T\+A\+TE, allowing the properties of the neural network to be specified.\hypertarget{ch2_basic_concepts_ch2s1s1_config}{}\subsection{2.\+1.\+1 The C\+O\+N\+F\+I\+G State}\label{ch2_basic_concepts_ch2s1s1_config}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+Similar to Py\+NN and many other simulation environments, C\+A\+R\+Lsim uses groups of neurons (see ch3\+\_\+neurons\+\_\+synapses\+\_\+groups) and connections (see ch4\+\_\+connections) as an abstraction to aid defining synaptic connectivity. Different groups of neurons can be created from a one-\/dimensional array to a three-\/dimensional grid (see ch3s3s2\+\_\+topography) via C\+A\+R\+Lsim\+::create\+Spike\+Generator\+Group or C\+A\+R\+Lsim\+::create\+Group, and connections can be specified depending on the relative placement of neurons via C\+A\+R\+Lsim\+::connect. This allows for the creation of networks with complex spatial structure.
+
+The present release allows users to choose from a number of synaptic plasticity mechanisms (see ch5\+\_\+synaptic\+\_\+plasticity). These include standard equations for S\+TP (see ch5s1\+\_\+short\+\_\+term\+\_\+plasticity), various forms of nearest-\/neighbor S\+T\+DP (see ch5s2\+\_\+spike\+\_\+timing\+\_\+dependent\+\_\+plasticity), and homeostatic synaptic plasticity in the form of synaptic scaling (see ch5s3\+\_\+homeostasis).
+
+For a selective list of available function calls in \+::\+C\+O\+N\+F\+I\+G\+\_\+\+S\+T\+A\+TE, please refer to the left-\/hand side of the above figure.\hypertarget{ch2_basic_concepts_ch2s1s2_setup}{}\subsection{2.\+1.\+2 The S\+E\+T\+U\+P State}\label{ch2_basic_concepts_ch2s1s2_setup}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+Once the spiking network has been specified, the function C\+A\+R\+Lsim\+::setup\+Network optimizes the network state for the chosen back-\/end (C\+PU or G\+PU) and moves the simulation into \+::\+S\+E\+T\+U\+P\+\_\+\+S\+T\+A\+TE.
+
+In this state, a number of monitors (see ch7\+\_\+monitoring) can be set up to record variables of interest (e.\+g., spikes, weights, state variables) in binary files for off-\/line analysis (see ch9\+\_\+matlab\+\_\+oat). New in C\+A\+R\+Lsim 3 is a means to make these data available at run-\/time (without the computational overhead of writing data to disk), which can be queried for data in the \+::\+R\+U\+N\+\_\+\+S\+T\+A\+TE.
+
+For example, Spike Monitors can be used to record output spikes for different neuronal groups (see ch7s1\+\_\+spike\+\_\+monitor) either to a spike file (binary) or to a Spike\+Monitor object. The former is useful for off-\/line analysis of activity (e.\+g., using ch9\+\_\+matlab\+\_\+oat). The latter is useful to calculate different spike metrics and statistics on-\/line, such as mean firing rate and standard deviation, or the number of neurons whose firing rate lies in a certain interval.
+
+Similar monitors exist to record weights (see ch7s2\+\_\+connection\+\_\+monitor). More monitors will be added in the future.\hypertarget{ch2_basic_concepts_ch2s1s3_run}{}\subsection{2.\+1.\+3 The R\+U\+N State}\label{ch2_basic_concepts_ch2s1s3_run}
+\begin{DoxyAuthor}{Author}
+Michael Beyeler
+\end{DoxyAuthor}
+The first call to C\+A\+R\+Lsim\+::run\+Network will take the simulation into \+::\+R\+U\+N\+\_\+\+S\+T\+A\+TE. The simulation can be repeatedly run (or \char`\"{}stepped\char`\"{}) for an arbitrary number of {\ttfamily sec}$\ast$1000 + {\ttfamily msec} milliseconds\+: 
+\begin{DoxyCode}
+sim.runNetwork(sec, msec);
+\end{DoxyCode}
+
+
+Input can be generated via current injection (see ch6s2\+\_\+generating\+\_\+current) or spike injection (see ch6s1\+\_\+generating\+\_\+spikes). We also provide plug-\/in code to create Poisson spike trains from animated visual stimuli such as sinusoidal gratings, plaids, and random dot fiels via the Visual\+Stimulus M\+A\+T\+L\+AB toolbox (see ch6s3\+\_\+visual\+\_\+stimulus\+\_\+toolbox).
+
+Once a network has reached \+::\+C\+O\+N\+F\+I\+G\+\_\+\+S\+T\+A\+TE or \+::\+R\+U\+N\+\_\+\+S\+T\+A\+TE, the network state can be stored in a file for later processing or for restoring a specific network (see ch8\+\_\+saving\+\_\+loading). The network state consists of all the synaptic connections, weights, delays, and whether the connections are plastic or fixed. Furthermore, the network can be stored after synaptic learning has occurred in order to externally analyze the learned synaptic patterns (for example, via a M\+A\+T\+L\+AB Connection\+Monitor; see ch9s4\+\_\+connection\+\_\+monitor).
+
+As more complex biological features are integrated into spiking network models, it becomes increasingly important to provide users with a method of tuning the large number of open parameters. To this end, C\+A\+R\+Lsim 3 provides a paramer tuning interface that uses evolutionary algorithms to optimize a generic fitness function (see ch10\+\_\+ecj). A more modest approach is to use the Simple\+Weight\+Tuner utility that changes weights on-\/the-\/fly such that a certain group fires at a predefined target firing rate (see ch12s4\+\_\+online\+\_\+weight\+\_\+tuning).
+
+As mentioned before, once a network has been run, its activity and structure can be visualized using an Offline Analysis Toolbox (O\+AT) written in M\+A\+T\+L\+AB (see ch9\+\_\+matlab\+\_\+oat). In addition, the O\+AT provides means to access the saved data programmatically, and to store generated sequences of plots as an A\+VI file.
+
+\begin{DoxySeeAlso}{See also}
+tut1\+\_\+basic\+\_\+concepts 
+\end{DoxySeeAlso}
