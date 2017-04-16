@@ -351,7 +351,7 @@ public:
 	 * \param[in] printRunSummary whether to print a basic summary of the run at the end
 	 * \param[in] copyState 	enable copying of data from device to host
 	 */
-	int runNetwork(int _nsec, int _nmsec, bool printRunSummary, bool copyState);
+	int runNetwork(int _nsec, int _nmsec, bool printRunSummary, bool copyState, bool shareWeights);
 
 	/*!
 	 * \brief build the network
@@ -807,6 +807,7 @@ private:
 	// float updateTotalCurrent(bool cEval, int cId, int I, int G, float* COUPL_CONSTANTS, int* cNeighbors, int nNeighbors, float const_1, float const_2);
 
 	void updateWeights();
+	void updateWeightsAndShare();
 
 
 	// +++++ GPU MODE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //

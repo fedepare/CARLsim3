@@ -778,7 +778,7 @@ public:
 	 * \param[in] printRunSummary enable the printing of a summary at the end of this run
 	 * \param[in] copyState 	  enable copying of data from device to host
 	 */
-	int runNetwork(int nSec, int nMsec=0, bool printRunSummary=true, bool copyState=false);
+	int runNetwork(int nSec, int nMsec=0, bool printRunSummary=true, bool copyState=false, bool shareWeights=false);
 
 	/*!
 	 * \brief build the network

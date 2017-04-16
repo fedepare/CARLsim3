@@ -1,0 +1,33 @@
+[INFO carlsim/kernel/src/snn_cpu.cpp:2023] *********************************************************************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2025] ********************      Welcome to CARLsim 3.1      ***************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2026] *********************************************************************************
+
+[INFO carlsim/kernel/src/snn_cpu.cpp:2028] ***************************** Configuring Network ********************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:2030] Starting CARLsim simulation "Convolution Example" in USER mode
+[INFO carlsim/kernel/src/snn_cpu.cpp:2031] Random number seed: 1492357787
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:2037] Current local time and date: Sun Apr 16 17:49:47 2017
+
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:268] grp_Info[0, Input].numPostSynapses = 8192, grp_Info[1, Conv 1 Exc].numPreSynapses = 16384
+[DEBUG carlsim/kernel/src/snn_cpu.cpp:268] grp_Info[0, Input].numPostSynapses = 16384, grp_Info[2, Conv 1 Inh].numPreSynapses = 16384
+[INFO carlsim/kernel/src/snn_cpu.cpp:461] Running CUBA mode (all synaptic conductances disabled)
+[INFO carlsim/kernel/src/snn_cpu.cpp:735] Update weight and weight change every 10 ms
+[INFO carlsim/kernel/src/snn_cpu.cpp:736] Weight Change Decay is enabled
+[INFO carlsim/kernel/src/snn_cpu.cpp:737] STDP scale factor = 0.005, wtChangeDecay = 0.900
+[INFO carlsim/kernel/src/snn_cpu.cpp:3002] 
+
+[INFO carlsim/kernel/src/snn_cpu.cpp:3004] ********************      CPU Simulation Summary      ***************************
+[INFO carlsim/kernel/src/snn_cpu.cpp:3007] Network Parameters: 	numNeurons = 32768 (numNExcReg:numNInhReg = 25.0:25.0)
+[INFO carlsim/kernel/src/snn_cpu.cpp:3008] 			numSynapses = 0
+[INFO carlsim/kernel/src/snn_cpu.cpp:3009] 			maxDelay = 0
+[INFO carlsim/kernel/src/snn_cpu.cpp:3010] Simulation Mode:	CUBA
+[INFO carlsim/kernel/src/snn_cpu.cpp:3011] Random Seed:		1492357787
+[INFO carlsim/kernel/src/snn_cpu.cpp:3012] Timing:			Model Simulation Time = 0 sec
+[INFO carlsim/kernel/src/snn_cpu.cpp:3013] 			Actual Execution Time = 0.00 sec
+[INFO carlsim/kernel/src/snn_cpu.cpp:3014] Average Firing Rate:	2+ms delay = -nan Hz
+[INFO carlsim/kernel/src/snn_cpu.cpp:3015] 			1ms delay = -nan Hz
+[INFO carlsim/kernel/src/snn_cpu.cpp:3016] 			Overall = -nan Hz
+[INFO carlsim/kernel/src/snn_cpu.cpp:3017] Overall Firing Count:	2+ms delay = 0
+[INFO carlsim/kernel/src/snn_cpu.cpp:3018] 			1ms delay = 0
+[INFO carlsim/kernel/src/snn_cpu.cpp:3019] 			Total = 0
+[INFO carlsim/kernel/src/snn_cpu.cpp:3020] *********************************************************************************
+

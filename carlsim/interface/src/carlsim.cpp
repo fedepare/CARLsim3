@@ -853,7 +853,7 @@ void CARLsim::setWeightAndWeightChangeUpdate(updateInterval_t wtANDwtChangeUpdat
 // +++++++++ PUBLIC METHODS: RUNNING A SIMULATION +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
 // run network with custom options
-int CARLsim::runNetwork(int nSec, int nMsec, bool printRunSummary, bool copyState) {
+int CARLsim::runNetwork(int nSec, int nMsec, bool printRunSummary, bool copyState, bool shareWeights) {
 	std::string funcName = "runNetwork()";
 	UserErrors::assertTrue(carlsimState_ == SETUP_STATE || carlsimState_ == RUN_STATE,
 				UserErrors::CAN_ONLY_BE_CALLED_IN_STATE, funcName, funcName, "SETUP or RUN.");
@@ -870,7 +870,7 @@ int CARLsim::runNetwork(int nSec, int nMsec, bool printRunSummary, bool copyStat
 
 	carlsimState_ = RUN_STATE;
 
-	return snn_->runNetwork(nSec, nMsec, printRunSummary, copyState);
+	return snn_->runNetwork(nSec, nMsec, printRunSummary, copyState, shareWeights);
 }
 
 // setup network with custom options

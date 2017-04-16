@@ -614,7 +614,7 @@ void CpuSNN::setESTDP(int grpId, bool isSet, stdpType_t type, stdpCurve_t curve,
 		grp_Info[grpId].OMEGA				= alphaPlus * (1 - grp_Info[grpId].KAPPA);
 		// set flags for STDP function
 		grp_Info[grpId].WithESTDPtype	= type;
-		grp_Info[grpId].WithESTDPcurve = curve;
+		grp_Info[grpId].WithESTDPcurve  = curve;
 		grp_Info[grpId].WithESTDP		= isSet;
 		grp_Info[grpId].WithSTDP		|= grp_Info[grpId].WithESTDP;
 		sim_with_stdp					|= grp_Info[grpId].WithSTDP;
@@ -742,7 +742,7 @@ void CpuSNN::setWeightAndWeightChangeUpdate(updateInterval_t wtANDwtChangeUpdate
 /// PUBLIC METHODS: RUNNING A SIMULATION
 /// ************************************************************************************************************ ///
 
-int CpuSNN::runNetwork(int _nsec, int _nmsec, bool printRunSummary, bool copyState) {
+int CpuSNN::runNetwork(int _nsec, int _nmsec, bool printRunSummary, bool copyState, bool shareWeights) {
 	assert(_nmsec >= 0 && _nmsec < 1000);
 	assert(_nsec  >= 0);
 	int runDurationMs = _nsec*1000 + _nmsec;
@@ -815,7 +815,8 @@ int CpuSNN::runNetwork(int _nsec, int _nmsec, bool printRunSummary, bool copySta
 			if (!sim_in_testing) {
 				// keep this if statement separate from the above, so that the counter is updated correctly
 				if (simMode_ == CPU_MODE) {
-					updateWeights();
+                    if (!shareWeights) updateWeights();
+                    else updateWeightsAndShare();
 #ifndef __CPU_ONLY__
 				} else{
 					updateWeights_GPU();
@@ -5679,6 +5680,104 @@ void CpuSNN::updateWeights() {
 						wt[offset+j] = 0.0;
 				}
 			}
+		}
+	}
+}
+
+// This function updates the synaptic weights from its derivatives for all the neurons in the neural map
+void CpuSNN::updateWeightsAndShare() {
+	// at this point we have already checked for sim_in_testing and sim_with_fixedwts
+	assert(sim_in_testing==false);
+	assert(sim_with_fixedwts==false);
+
+	// update synaptic weights here for all the neurons..
+	for(int g = 0; g < numGrp; g++) {
+		// no changable weights so continue without changing..
+		if(grp_Info[g].FixedInputWts || !(grp_Info[g].WithSTDP))
+			continue;
+
+		// check the neuron in this neural group that is changing and share this weight update
+        int NeurMap = 0;
+        unsigned int offset;
+        float posWeightAbs = 0;
+        float negWeightAbs = 0;
+        int initPost = grp_Info[g].StartN;
+        int endPost  = grp_Info[g].EndN;
+        int sizeNeurMap = grp_Info[g].SizeX * grp_Info[g].SizeY;
+        for(int i = grp_Info[g].StartN; i <= grp_Info[g].EndN-1; i++) {
+            offset = cumulativePre[i];
+
+            if (NeurMap == i/sizeNeurMap) {
+                for(int j = 0; j < Npre_plastic[i]; j++) {
+                    if (wtChange[offset + j] > posWeightAbs) {
+                        posWeightAbs = wtChange[offset + j];
+                    } else if ((wtChange[offset + j] < negWeightAbs)) {
+                        negWeightAbs = wtChange[offset + j];
+                    }
+                }
+            }
+
+            if (NeurMap != (i+1)/sizeNeurMap) {
+
+                // perform weight update for this neural maps
+                float effectiveWtChange;
+                if (abs(posWeightAbs) > abs(negWeightAbs)) {
+                    effectiveWtChange = stdpScaleFactor_ * posWeightAbs;
+                } else {
+                    effectiveWtChange = stdpScaleFactor_ * negWeightAbs;
+                }
+
+                // set the limits for the loop over the postsynaptic neurons in this map
+                endPost = i+1;
+
+                for(int pN = initPost; pN < endPost; pN++) {
+
+                    offset = cumulativePre[pN];
+
+                    for(int j = 0; j < Npre_plastic[pN]; j++) {
+
+                        // weight update
+                        switch (grp_Info[g].WithESTDPtype) {
+                            case STANDARD:
+                                wt[offset+j] += effectiveWtChange;
+                                break;
+                            case UNKNOWN_STDP:
+                            default:
+                                // we shouldn't even be in here if !WithSTDP
+                                break;
+                        }
+
+                        switch (grp_Info[g].WithISTDPtype) {
+                            case STANDARD:
+                                wt[offset+j] += effectiveWtChange;
+                                break;
+                            case UNKNOWN_STDP:
+                            default:
+                                // we shouldn't even be in here if !WithSTDP
+                                break;
+                        }
+
+                        // if this is an excitatory or inhibitory synapse
+                        if (maxSynWt[offset + j] >= 0) {
+                            if (wt[offset + j] >= maxSynWt[offset + j])
+                                wt[offset + j] = maxSynWt[offset + j];
+                            if (wt[offset + j] < 0)
+                                wt[offset + j] = 0.0;
+                        } else {
+                            if (wt[offset + j] <= maxSynWt[offset + j])
+                                wt[offset + j] = maxSynWt[offset + j];
+                            if (wt[offset+j] > 0)
+                                wt[offset+j] = 0.0;
+                        }
+                    }
+                }
+
+                // initialize the variable and update counters
+                NeurMap++;
+                initPost = i+1;
+                posWeightAbs = 0;
+                negWeightAbs = 0;
+            }
 		}
 	}
 }
